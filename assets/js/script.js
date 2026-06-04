@@ -20,7 +20,6 @@ document.getElementById('contact-btn').addEventListener('click', () => {
   });
 });
 
-
 const form = document.querySelector('form');
 
 const emailInput = document.getElementById("email");
@@ -28,42 +27,42 @@ const phoneInput = document.getElementById("phone");
 const emailError = document.getElementById("email-error");
 const phoneError = document.getElementById("phone-error");
 
-// 🧠 Khi bấm "Send Message"
+// Handle the contact form without a full page reload.
 form.addEventListener("submit", async function (e) {
-  e.preventDefault(); // chặn reload trang
+  e.preventDefault();
 
   const formData = new FormData(form);
   const email = emailInput.value.trim();
   const phone = phoneInput.value.trim();
   let isValid = true;
 
-  // Reset lỗi
+  // Clear previous validation messages.
   emailError.textContent = "";
   phoneError.textContent = "";
 
-  // 1️⃣ Phải có ít nhất 1 trong 2
+  // Require at least one contact method.
   if (!email && !phone) {
     emailError.textContent = "Please provide at least an Email or a Phone number.";
     phoneError.textContent = "Please provide at least an Email or a Phone number.";
     isValid = false;
   }
 
-  // 2️⃣ Email hợp lệ
+  // Validate email format when provided.
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     emailError.textContent = "Invalid email address format.";
     isValid = false;
   }
 
-  // 3️⃣ Phone hợp lệ
+  // Validate phone number when provided.
   if (phone && !/^[0-9]{8,15}$/.test(phone)) {
     phoneError.textContent = "Phone number must be between 8 and 15 digits.";
     isValid = false;
   }
 
-  // ❌ Ngừng nếu không hợp lệ
+  // Stop before submitting invalid data.
   if (!isValid) return;
 
-  // ✅ Gửi form qua Formspree (AJAX)
+  // Submit to Formspree via AJAX.
   try {
     const response = await fetch("https://formspree.io/f/mojzqaeq", {
       method: "POST",
@@ -72,24 +71,24 @@ form.addEventListener("submit", async function (e) {
     });
 
     if (response.ok) {
-      showToast("✅ Message sent successfully!", "success");
+      showToast("Message sent successfully!", "success");
       form.reset();
     } else {
-      showToast("❌ Something went wrong. Please try again later.", "error");
+      showToast("Something went wrong. Please try again later.", "error");
     }
   } catch (error) {
-    showToast("⚠️ Network error. Please check your connection.", "error");
+    showToast("Network error. Please check your connection.", "error");
   }
 });
 
-// 🧹 Xóa lỗi khi người dùng nhập lại
+// Clear field-level errors while typing.
 [emailInput, phoneInput].forEach(input => {
   input.addEventListener("input", () => {
     document.getElementById(input.id + "-error").textContent = "";
   });
 });
 
-// 🔔 Toast thông báo đẹp
+// Lightweight toast notification.
 function showToast(message, type = "success") {
   const toast = document.createElement("div");
   toast.textContent = message;
@@ -102,11 +101,64 @@ function showToast(message, type = "success") {
     setTimeout(() => toast.remove(), 500);
   }, 3000);
 }
+
 function viewProject(url) {
-  // Chuyển người dùng đến đường link được truyền vào
   if (url) {
     window.location.href = url;
   } else {
-    alert("Đường dẫn dự án đang được cập nhật!");
+    alert("Project link is being updated!");
   }
+}
+
+const thesisGalleryItems = document.querySelectorAll(".thesis-gallery-item");
+const thesisLightbox = document.querySelector(".thesis-lightbox");
+
+if (thesisGalleryItems.length && thesisLightbox) {
+  const thesisLightboxImg = thesisLightbox.querySelector(".thesis-lightbox-img");
+  const thesisLightboxCaption = thesisLightbox.querySelector(".thesis-lightbox-caption");
+  const thesisLightboxClose = thesisLightbox.querySelector(".thesis-lightbox-close");
+  let thesisLastTrigger = null;
+
+  const closeThesisLightbox = () => {
+    thesisLightbox.classList.remove("is-open");
+    thesisLightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("thesis-lightbox-open");
+    thesisLightboxImg.removeAttribute("src");
+    thesisLightboxImg.alt = "";
+    thesisLightboxCaption.textContent = "";
+
+    if (thesisLastTrigger) {
+      thesisLastTrigger.focus();
+      thesisLastTrigger = null;
+    }
+  };
+
+  const openThesisLightbox = (trigger) => {
+    thesisLastTrigger = trigger;
+    thesisLightboxImg.src = trigger.dataset.thesisFull;
+    thesisLightboxImg.alt = trigger.dataset.thesisAlt || "";
+    thesisLightboxCaption.textContent = trigger.dataset.thesisAlt || "";
+    thesisLightbox.classList.add("is-open");
+    thesisLightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("thesis-lightbox-open");
+    thesisLightboxClose.focus();
+  };
+
+  thesisGalleryItems.forEach((item) => {
+    item.addEventListener("click", () => openThesisLightbox(item));
+  });
+
+  thesisLightboxClose.addEventListener("click", closeThesisLightbox);
+
+  thesisLightbox.addEventListener("click", (event) => {
+    if (event.target === thesisLightbox) {
+      closeThesisLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && thesisLightbox.classList.contains("is-open")) {
+      closeThesisLightbox();
+    }
+  });
 }

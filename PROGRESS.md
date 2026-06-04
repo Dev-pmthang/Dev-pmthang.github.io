@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 09:14:04 +07:00
-- Scope: Rewrite the Graduation Thesis project as a LoRa Mesh environmental monitoring thesis and switch its gallery to the new local image set.
+- Timestamp: 2026-06-04 09:54:28 +07:00
+- Scope: Add a responsive multi-image gallery and lightbox for the Graduation Thesis project without affecting the rest of the portfolio site.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -12,93 +12,70 @@
 - Primary assets: `assets/img/*`, `assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf`
 
 ## Completed
-- Audited the repository structure and primary source files before editing.
-- Confirmed the site architecture is HTML + CSS + vanilla JavaScript with no build step.
-- Confirmed the active theme is loaded from `assets/css/style-orange-red.css`, not `assets/css/style.css`.
-- Confirmed the contact form submits directly to Formspree from client-side JavaScript.
-- Confirmed `PROGRESS.md` did not exist before this session.
-- Confirmed the current folder originally had no git repository.
-- Initialized a new git repository at the project root to enable checkpoint and rollback workflow from this session onward.
-- Created an initial baseline commit for the current project snapshot.
-- Reviewed the existing `projects` section structure and kept the new project entry consistent with the current prose, tag layout, and reverse-chronological ordering.
-- Added the Forklift Battery Protection Controller as the newest project entry in `index.html`.
-- Added a lightweight PowerShell verification script to confirm the inserted title, summary, description, and key tags are present in `index.html`.
-- Executed the verification script successfully after normalizing whitespace handling for multiline HTML content.
-- Confirmed the user replaced the Graduation Thesis image set directly in `assets/img/projects/Graduation-thesis`.
-- Updated the Graduation Thesis project card to render local images directly from `assets/img/projects/Graduation-thesis`.
-- Added a dedicated thesis gallery modifier so project-specific media ratios do not inherit the older portrait-heavy crop ratio.
-- Extended the verification script to assert thesis image references and file existence, then executed it successfully.
-- Replaced the previous thesis content with the LoRa Mesh environmental monitoring thesis description, role context, and final grade.
-- Switched the thesis gallery to the user-provided `Master.jpg`, `Node.jpg`, and `Bo_tri.jpg` media set in `assets/img/projects/Graduation-thesis`.
-- Retuned the thesis gallery aspect ratios so one landscape hero image and two portrait support images display more cleanly.
-- Updated the verification script to assert the new thesis title, summary, tags, image references, and file existence, then executed it successfully.
+- Audited the current `projects` markup, thesis asset folder, active stylesheet, and behavior script before editing.
+- Kept the existing portfolio layout and scoped all new UI behavior to the Graduation Thesis project only.
+- Replaced the thesis single-image presentation with a dedicated five-image gallery using local assets from `assets/img/projects/Graduation-thesis`.
+- Added thesis-only hover zoom behavior with clipped overflow, rounded cards, and responsive grid behavior for desktop, tablet, and mobile.
+- Added a thesis-only lightbox modal with close button, overlay click-to-close, and `Esc` key support.
+- Preserved image proportions by keeping thumbnail crops inside card containers and using `object-fit: contain` in the lightbox preview.
+- Added thesis-specific verification coverage in `tests/verify-portfolio-projects.ps1`.
+- Added a headless browser interaction test in `tests/verify-thesis-gallery.mjs` and a PowerShell wrapper in `tests/verify-thesis-gallery.ps1`.
+- Replaced the earlier iframe-based harness approach with a Chrome DevTools Protocol test runner because the iframe dump-dom method was not reliable for modal interaction checks.
+- Captured headless QA screenshots during thesis gallery verification for desktop, tablet, and mobile viewports.
+- Cleaned `assets/js/script.js` comments to readable ASCII English while preserving existing logic.
+- Executed all verification scripts successfully after the final code update.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- Define a repeatable test strategy for future UI or logic changes.
-- Verify the site in a browser after the next functional or visual change.
-- Review text encoding in source files and normalize if mojibake appears in the editor or browser.
-- Replace the text-only Forklift Battery Protection Controller entry with real project media when image or demo assets become available.
-- Run a manual browser QA pass for the updated thesis gallery once an in-app browser session is available.
-- Clean up unused legacy thesis images in the folder later if you decide they are no longer needed.
+- Add real project media for the Forklift Battery Protection Controller entry when assets are available.
+- Run a live in-app browser QA pass if the `iab` backend becomes available again.
+- Review and normalize older mojibake comments or text fragments in legacy source sections if they become visible in the editor or browser.
+- Decide whether older unused thesis images should remain in `assets/img/projects/Graduation-thesis` long-term.
+- Add broader site-wide responsive checks later if you plan a full UI refresh beyond the thesis section.
 
 ## Technical And Design Decisions
-- Preserve the current static-site architecture unless a future task requires a real build pipeline.
-- Treat `style-orange-red.css` as the design-system source of truth for current UI work.
-- Keep the current Formspree integration unless the user requests a different contact workflow.
-- Keep project descriptions concise, technical, and focused on system behavior plus real-world operating value.
-- Insert the new project as a content-only `project-row` because no image or video asset was provided for this session.
-- Use project-specific gallery modifiers when new media shapes differ significantly from the original portrait-oriented gallery assumptions.
-- Prefer project text and gallery media that describe the same real system revision to avoid mismatched storytelling in the portfolio.
+- Keep `assets/css/style-orange-red.css` as the current design-system source of truth.
+- Keep the thesis gallery isolated with dedicated classes such as `thesis-gallery`, `thesis-gallery-item`, and `thesis-lightbox` to avoid regressions in other projects.
+- Preserve the existing `.project-row` structure and add a thesis-specific media modifier instead of refactoring shared project gallery rules.
+- Use semantic `<button>` elements for gallery items so click, focus, and keyboard activation work naturally without extra libraries.
+- Keep the lightbox implementation in vanilla JavaScript because the site has no build step and the interaction is simple enough to stay dependency-free.
+- Prefer direct browser automation through Chrome DevTools Protocol for future static-site UI interaction tests when the built-in browser backend is unavailable.
 
 ## Risks And Notes For Next Session
-- No automated test harness exists yet; any future logic change will need a lightweight test approach added as part of the task.
-- The environment currently needs escalated shell access because sandboxed shell startup failed with `windows sandbox: spawn setup refresh`.
-- Some console output shows mojibake in emoji/Vietnamese text, which may indicate an encoding mismatch in the terminal path even if the files themselves are still valid.
-- External dependencies include CDN-hosted icon/fonts and a live Formspree endpoint.
-- The new forklift project currently has no dedicated media block, so visual consistency can be improved later by adding a project image or demo video.
-- Browser-based visual verification is still blocked because the in-app browser backend remains unavailable (`Browser is not available: iab`).
-- The thesis folder now contains both the older hardware images and the newer LoRa environmental monitoring images; only the newer set is referenced in `index.html`.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so final visual verification relied on headless Chrome instead of the in-app browser.
+- The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
+- Some terminal output still shows mojibake, which suggests a console encoding mismatch rather than a confirmed source-file corruption issue.
+- Thesis interaction coverage is now automated, but unrelated site-wide responsive issues outside the thesis scope should be validated separately if you touch broader layout code later.
 
 ## Lessons Learned
-### 2026-06-04 - Git checkpoint workflow could not be applied
-- Cause: The working directory is not a git repository.
-- Fix: Initialize git with `git init` or open the project from the intended repository root before starting feature work.
-- Prevention: Verify `git status` succeeds at session start before promising checkpoint commits.
+### 2026-06-04 - Git checkpoint workflow could not be applied initially
+- Cause: The working directory was not yet a git repository.
+- Fix: Initialized git before continuing feature work.
+- Prevention: Verify `git status` works at the start of every session before promising checkpoint commits.
 
 ### 2026-06-04 - Active styling source could be misidentified
-- Cause: Multiple CSS files exist, but `index.html` currently loads `assets/css/style-orange-red.css`.
-- Fix: Inspect the linked stylesheet in the HTML entry point before editing styles.
-- Prevention: Always confirm the active asset references from the entry document, not only from filenames in the tree.
-
-### 2026-06-04 - Tooling access required escalation
-- Cause: Sandboxed shell and Node REPL startup failed with `windows sandbox: spawn setup refresh`.
-- Fix: Re-run essential inspection commands with escalated permissions.
-- Prevention: If the same sandbox error appears again, escalate read-only inspection commands immediately instead of retrying multiple times in the sandbox.
-
-### 2026-06-04 - New project entries may not always ship with media assets
-- Cause: Portfolio content requests can arrive before project photos or demo videos are prepared.
-- Fix: Add the project as a text-only `project-row` first, then attach media in a later session.
-- Prevention: Ask for or prepare representative project media before doing a final visual polish pass on the projects section.
+- Cause: Multiple CSS files exist, but the real entry point loads `assets/css/style-orange-red.css`.
+- Fix: Confirmed the linked stylesheet from `index.html` before editing styles.
+- Prevention: Always inspect the entry document and active asset references before changing UI code.
 
 ### 2026-06-04 - Content verification for HTML should not depend on line wrapping
-- Cause: Multiline HTML paragraphs can break exact string matches in simple text-based tests.
-- Fix: Normalize whitespace in the verification script before checking required snippets.
-- Prevention: Use whitespace-tolerant assertions for static HTML content tests from the start.
+- Cause: Multiline HTML paragraphs can break exact string matches in simple static tests.
+- Fix: Normalized whitespace in verification scripts before checking required snippets.
+- Prevention: Use whitespace-tolerant assertions for static HTML validation from the start.
 
 ### 2026-06-04 - Media galleries need project-specific aspect ratios
-- Cause: The shared `.media-item` styling assumed tall portrait media and would crop wide board photos too aggressively.
-- Fix: Added a thesis-specific gallery modifier with wider aspect ratios and a hero image spanning both columns.
-- Prevention: When adding new project media, inspect the image shapes first and add a modifier class instead of forcing every project into one gallery ratio.
-
-### 2026-06-04 - Browser verification may be unavailable even after frontend edits
-- Cause: The in-app browser backend was not available for this session.
-- Fix: Completed text-based verification and file existence checks, then recorded the missing visual QA as follow-up work.
-- Prevention: Attempt browser verification after each frontend change, but keep a fallback verification script so the session can still produce evidence of correctness.
+- Cause: The shared media rules were tuned for portrait-heavy project content and would crop wider hardware images too aggressively.
+- Fix: Added a thesis-specific gallery modifier with mixed hero, portrait, and wide thumbnail ratios.
+- Prevention: Inspect image shapes before reusing a shared gallery layout and add scoped modifiers when a project has different media proportions.
 
 ### 2026-06-04 - Thesis media and thesis narrative must stay aligned
-- Cause: The original thesis text described a different hardware theme than the newly supplied LoRa environmental monitoring photos.
-- Fix: Rewrote the thesis title, summary, description, tags, and image references together in the same session.
-- Prevention: When swapping a project's image set, review and update the corresponding project copy in the same change.
+- Cause: The original thesis copy and the newly supplied images described different systems.
+- Fix: Rewrote the thesis title, summary, description, tags, and media references together.
+- Prevention: Treat project text and project media as one content unit during portfolio updates.
+
+### 2026-06-04 - Iframe dump-dom browser checks were not reliable for modal testing
+- Cause: The first headless verification approach relied on an iframe harness and dump-dom timing, which was inconsistent for lightbox interactions across viewports.
+- Fix: Replaced it with a direct Chrome DevTools Protocol runner that drives the real page and checks UI state after each interaction.
+- Prevention: For future UI interaction tests on this static site, prefer direct browser automation over iframe-based DOM dumps when behavior matters.

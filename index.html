@@ -70,13 +70,12 @@
     <div class="about-content">
       <h2>About <span>Me</span></h2>
       <p>
-        With a strong background in embedded and IoT programming, electronic circuit design, application
-        programming, I
-        specialize in developing embedded and IoT systems and developing applications for them. My experience
-        includes
-        embedded and IoT programming, PCB design, application design for both Windows and mobile platforms. I
-        enjoy
-        turning creative ideas into real products.
+Passionate about embedded systems, with hands-on experience gained through multiple hardware and
+firmware development projects. Skilled in hardware design, schematic capture, PCB layout, and
+embedded firmware development, with the ability to contribute to end-to-end electronic product
+development. Seeking long-term professional growth in a technical environment where I can solve
+real-world engineering challenges, continuously update emerging technologies, and strengthen my
+expertise toward becoming an Embedded/Hardware System Architect within the next five years
       </p>
       <a href="#" class="btn">Read More</a>
     </div>
@@ -154,7 +153,7 @@
         <div class="tech-items">
           <span class="tech-item">MQTT</span>
           <span class="tech-item">CAN Bus</span>
-          <span class="tech-item">ModBus RTU</span>
+          <span class="tech-item">RS485/ModBus RTU</span>
           <span class="tech-item">HTTP/HTTPS</span>
           <span class="tech-item">BLE/Bluetooth</span>
           <span class="tech-item">LoRa</span>
@@ -347,13 +346,44 @@
 
       <div class="project-row">
         <div class="project-media-gallery project-media-gallery--thesis">
-          <img src="assets/img/projects/Graduation-thesis/Master.jpg"
-            alt="LoRa Mesh environmental monitoring master node with mobile dashboard"
-            class="media-item media-item--hero">
-          <img src="assets/img/projects/Graduation-thesis/Node.jpg"
-            alt="LoRa Mesh environmental monitoring field node hardware" class="media-item">
-          <img src="assets/img/projects/Graduation-thesis/Bo_tri.jpg"
-            alt="LoRa Mesh environmental monitoring deployment layout" class="media-item">
+          <div class="thesis-gallery">
+            <button class="thesis-gallery-item thesis-gallery-item--hero" type="button"
+              data-thesis-full="assets/img/projects/Graduation-thesis/Master.jpg"
+              data-thesis-alt="LoRa Mesh environmental monitoring master node with mobile dashboard"
+              aria-label="Open master node image">
+              <img src="assets/img/projects/Graduation-thesis/Master.jpg"
+                alt="LoRa Mesh environmental monitoring master node with mobile dashboard"
+                class="thesis-gallery-thumb">
+            </button>
+            <button class="thesis-gallery-item thesis-gallery-item--portrait" type="button"
+              data-thesis-full="assets/img/projects/Graduation-thesis/Node.jpg"
+              data-thesis-alt="LoRa Mesh environmental monitoring field node hardware"
+              aria-label="Open field node image">
+              <img src="assets/img/projects/Graduation-thesis/Node.jpg"
+                alt="LoRa Mesh environmental monitoring field node hardware" class="thesis-gallery-thumb">
+            </button>
+            <button class="thesis-gallery-item thesis-gallery-item--portrait" type="button"
+              data-thesis-full="assets/img/projects/Graduation-thesis/Bo_tri.jpg"
+              data-thesis-alt="LoRa Mesh environmental monitoring deployment layout"
+              aria-label="Open deployment layout image">
+              <img src="assets/img/projects/Graduation-thesis/Bo_tri.jpg"
+                alt="LoRa Mesh environmental monitoring deployment layout" class="thesis-gallery-thumb">
+            </button>
+            <button class="thesis-gallery-item thesis-gallery-item--wide" type="button"
+              data-thesis-full="assets/img/projects/Graduation-thesis/Full_Board.jpg"
+              data-thesis-alt="LoRa Mesh monitoring board assembly close-up"
+              aria-label="Open board assembly image">
+              <img src="assets/img/projects/Graduation-thesis/Full_Board.jpg"
+                alt="LoRa Mesh monitoring board assembly close-up" class="thesis-gallery-thumb">
+            </button>
+            <button class="thesis-gallery-item thesis-gallery-item--wide" type="button"
+              data-thesis-full="assets/img/projects/Graduation-thesis/Board_Altium.JPG"
+              data-thesis-alt="LoRa Mesh environmental monitoring board render in Altium"
+              aria-label="Open Altium board render image">
+              <img src="assets/img/projects/Graduation-thesis/Board_Altium.JPG"
+                alt="LoRa Mesh environmental monitoring board render in Altium" class="thesis-gallery-thumb">
+            </button>
+          </div>
         </div>
         <div class="project-content">
           <div class="project-title">Application of LoRa Mesh Network in Environmental Monitoring</div>
@@ -383,6 +413,15 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="thesis-lightbox" id="thesis-lightbox" aria-hidden="true" role="dialog" aria-modal="true"
+      aria-label="Graduation Thesis image preview">
+      <div class="thesis-lightbox-panel">
+        <button class="thesis-lightbox-close" type="button" aria-label="Close image preview">&times;</button>
+        <img src="" alt="" class="thesis-lightbox-img">
+        <p class="thesis-lightbox-caption"></p>
+      </div>
     </div>
   </section>
 
