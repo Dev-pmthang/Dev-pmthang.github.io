@@ -37,7 +37,7 @@ $requiredCssSnippets = @(
   '.contact-badge--zalo',
   'object-fit: contain',
   'overflow: hidden',
-  'grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.18fr)'
+  'grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1.16fr)'
 )
 
 foreach ($snippet in $requiredCssSnippets) {

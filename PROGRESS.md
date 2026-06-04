@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 11:43:09 +07:00
-- Scope: Redesign the `Contact` section into a two-column contact layout with a dedicated Zalo QR card while preserving the existing form behavior and responsive styling.
+- Timestamp: 2026-06-04 13:11:49 +07:00
+- Scope: Rebalance the `Contact` section so the left sidebar and right form column feel cleaner, lighter, and more proportional while keeping the same overall structure and responsive behavior.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -16,15 +16,16 @@
 - Contact image folder: `assets/img/Contact`
 
 ## Completed
-- Audited the current `contact` markup, contact form behavior in `assets/js/script.js`, and contact-related styling in `assets/css/style-orange-red.css` before editing.
-- Confirmed the actual QR asset is `assets/img/Contact/Zalo.jpg` and created a git checkpoint commit before modifying the contact section.
-- Rebuilt the `Contact` section into a dedicated `contact-layout` with a left sidebar and right form column.
-- Added two contact cards on the left side: an intro/collaboration card and a Zalo QR card with the actual `Zalo.jpg` asset.
-- Wrapped the existing form in a `contact-form-shell` card, kept the same fields and submit behavior, and improved the JavaScript form selector by targeting `#contact-form` explicitly.
-- Added scoped contact-only CSS for the new card layout, QR container, hover effects, and responsive behavior without touching the project gallery or footer structure.
-- Implemented responsive behavior so the overall contact layout stays two-column on desktop and collapses to one column on tablet/mobile.
-- Added a new static-plus-browser verification flow for the contact section and executed it successfully.
-- Re-ran the existing project showcase tests to confirm the contact refactor did not break project galleries or the thesis lightbox.
+- Re-audited the current contact markup and the new contact-only CSS block before refining the layout further.
+- Created a new checkpoint commit before tuning the visual balance of the contact section.
+- Reduced the visual weight of the left sidebar by tightening card padding, shrinking the QR presentation, and reducing internal gaps.
+- Adjusted the desktop grid ratio to a clearer left/right balance closer to the intended 40-45% / 55-60% split.
+- Changed the contact grid to stretch the right form shell vertically on desktop so the form column reads as a balanced counterpart to the stacked left cards.
+- Tightened typography, badge sizing, highlight-card spacing, input padding, textarea height, and submit button styling to make the contact area feel denser and more intentional.
+- Kept the existing HTML structure and form functionality intact; the rebalancing work was handled almost entirely through scoped CSS updates.
+- Strengthened the contact verification script to assert desktop sidebar width ratio, QR visual footprint, and form-height balance in addition to the existing responsive checks.
+- Verified the updated contact layout in headless Chrome and reviewed the generated desktop screenshot for visual QA.
+- Re-ran the existing project showcase and thesis regression tests successfully after the contact rebalance.
 
 ## In Progress
 - No active implementation task in this session.
@@ -32,19 +33,20 @@
 ## TODO
 - If you rename the Zalo QR asset later, update the `src` in `index.html` to match the new filename or path.
 - Consider adding direct contact metadata later, such as a clickable Zalo ID, email card, or phone card, if you want the left column to carry more than the QR entry point.
+- Consider adding a second CTA below the form, such as `Download CV` or `Schedule a Call`, if you want to use the remaining vertical space in the form shell on larger screens.
 - Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for BMS, forklift, and valve images too.
 - Run a live in-app browser QA pass if the `iab` backend becomes available again.
 - Review and normalize older mojibake text fragments in legacy sections if they become visible in the browser.
 
 ## Technical And Design Decisions
-- Limited the scope to the `contact` section only and introduced contact-specific class names so header, footer, projects, and the thesis lightbox remain unaffected.
-- Used the actual asset path `assets/img/Contact/Zalo.jpg` instead of a placeholder because the file is already present in the workspace.
-- Kept the form submission flow unchanged and only tightened the selector from `querySelector("form")` to `getElementById("contact-form")` for more explicit binding.
-- Chose card-based layout and hover motion that matches the existing site language: dark surfaces, rounded corners, subtle gradients, soft red/silver glow, and controlled scaling.
-- Added a dedicated contact verification script instead of overloading the project gallery tests so the contact section can evolve independently.
+- Limited the rebalance to scoped contact selectors so no project, footer, or thesis-lightbox layout behavior changed.
+- Preserved the actual asset path `assets/img/Contact/Zalo.jpg` and kept the contact section structure stable, using CSS as the primary tool for visual rebalancing.
+- Used a stretched desktop grid with a smaller left-column ratio instead of inventing a new markup pattern, because the imbalance was caused mainly by proportion and spacing rather than DOM structure.
+- Reduced QR dominance by constraining the QR shell and QR image width rather than removing content from the Zalo card.
+- Strengthened the browser verification script so the intended design targets are measurable instead of relying only on subjective inspection.
 
 ## Risks And Notes For Next Session
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive verification for the contact section continues to rely on headless Chrome screenshots and computed-style checks.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive verification for the contact section still relies on headless Chrome screenshots and computed-style checks.
 - The contact section now depends on the presence of `assets/img/Contact/Zalo.jpg`; if that asset is moved or renamed, the QR card will need its `src` updated.
 - The generated manifest still covers four project folders and nine images in total.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
@@ -79,3 +81,8 @@
 - Cause: The initial contact test counted `contact-card-heading` along with the two main `contact-card` blocks because the regex matched the shared prefix.
 - Fix: Narrowed the assertion to count only `class="contact-card contact-card--..."` blocks.
 - Prevention: When testing utility or BEM-like class names, scope regex assertions to the exact variant pattern instead of the shared prefix.
+
+### 2026-06-04 - Contact imbalance was driven more by proportion than by missing components
+- Cause: The first contact redesign introduced the right pieces, but the left column still felt visually heavy because the sidebar width, QR size, and internal spacing were too generous relative to the form shell.
+- Fix: Reduced the sidebar share, compacted the QR card, tightened padding and typography, and stretched the form shell to restore visual balance.
+- Prevention: For split contact layouts, validate width ratios and visual weight explicitly instead of assuming a structurally correct two-column layout will feel balanced by default.
