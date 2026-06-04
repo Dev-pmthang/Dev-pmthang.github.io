@@ -18,6 +18,9 @@ const thesisImages = [
   "Full_Board.jpg",
   "Board_Altium.JPG"
 ];
+const bmsImages = [
+  "BMS.png"
+];
 const forkliftImages = [
   "BMS_RELAY.png"
 ];
@@ -399,6 +402,7 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
           projectImages.some((image) => (image.getAttribute("src") || "").includes(name))
         )
         && projectImages.every((image) => image.complete && image.naturalWidth > 0 && image.naturalHeight > 0);
+      const bmsProjectImages = getProjectImages("BMS");
       const forkliftProjectImages = getProjectImages("Forklift-Battery-Protection-Controller");
       const valveProjectImages = getProjectImages("Smart-Industrial-Valve-Controller");
       const thumbsReady = Array.from(document.querySelectorAll(".thesis-gallery-thumb"))
@@ -406,6 +410,7 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
       return Boolean(gallery)
         && items.length === 5
         && thumbsReady
+        && autoGalleryReady(bmsProjectImages, ${JSON.stringify(bmsImages)})
         && autoGalleryReady(forkliftProjectImages, ${JSON.stringify(forkliftImages)})
         && autoGalleryReady(valveProjectImages, ${JSON.stringify(valveImages)});
     })()`
@@ -450,6 +455,7 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
         galleryExists: Boolean(gallery),
         lightboxExists: Boolean(lightbox),
         autoProjects: {
+          bms: getAutoProjectState("BMS"),
           forklift: getAutoProjectState("Forklift-Battery-Protection-Controller"),
           valve: getAutoProjectState("Smart-Industrial-Valve-Controller")
         },
@@ -495,6 +501,11 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
   assert(!initialState.lightboxOpen, `${viewport.name}: lightbox starts closed.`);
 
   [
+    {
+      key: "bms",
+      label: "bms controller",
+      expectedImages: bmsImages
+    },
     {
       key: "forklift",
       label: "forklift controller",
@@ -661,7 +672,7 @@ async function main() {
       screenshots.push({ viewport: viewport.name, path: screenshotPath });
     }
 
-    console.log("PASS: Project showcase layout and thesis lightbox checks passed.");
+    console.log("PASS: Project showcase layout, auto galleries, and thesis lightbox checks passed.");
     for (const screenshot of screenshots) {
       console.log(`SCREENSHOT ${screenshot.viewport}: ${screenshot.path}`);
     }

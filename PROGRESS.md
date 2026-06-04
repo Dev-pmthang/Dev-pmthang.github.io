@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 10:43:59 +07:00
-- Scope: Extend the auto-gallery workflow to `Forklift Battery Protection Controller` so new images in its project folder can appear without further HTML edits.
+- Timestamp: 2026-06-04 11:30:21 +07:00
+- Scope: Add the `Lithium Battery Management System - BMS` project to the portfolio, connect it to the shared auto-gallery workflow, and keep verification coverage aligned with the new project count and media folder.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -12,37 +12,39 @@
 - Generated gallery manifest: `assets/data/project-galleries.js`
 - Gallery sync scripts: `scripts/sync-project-galleries.mjs`, `scripts/sync-project-galleries.ps1`
 - Gallery watch scripts: `scripts/watch-project-galleries.mjs`, `scripts/watch-project-galleries.ps1`
+- Active image-backed project folders: `BMS`, `Forklift-Battery-Protection-Controller`, `Graduation-thesis`, `Smart-Industrial-Valve-Controller`
 
 ## Completed
-- Audited the new folder `assets/img/projects/Forklift-Battery-Protection-Controller` and confirmed the added image `BMS_RELAY.png`.
-- Confirmed the forklift project card was still text-only while the valve project was already using the manifest-driven auto-gallery workflow.
-- Updated the `Forklift Battery Protection Controller` project row to use the same `data-project-gallery` auto-rendering mechanism as the valve project.
-- Kept the forklift project content unchanged and only added the media container plus fallback image markup.
-- Regenerated the gallery manifest so `Forklift-Battery-Protection-Controller` is now included in `assets/data/project-galleries.js`.
-- Extended the static verification script to assert the forklift gallery hook, manifest entry, and local media file.
-- Extended the browser verification script to validate both auto-rendered project galleries (`Forklift` and `Smart Industrial Valve Controller`) separately instead of treating all auto-gallery images as one group.
-- Executed the gallery sync and both verification scripts successfully after the update.
+- Audited `index.html`, the gallery manifest workflow, and both verification scripts before making changes.
+- Confirmed the new folder `assets/img/projects/BMS` contains `BMS.png` and created a git checkpoint commit before editing the project showcase.
+- Added a new `Lithium Battery Management System - BMS` project row in `index.html`, placed between the newer forklift project and the older valve project to preserve reverse-chronological ordering.
+- Wrote portfolio copy from the provided CV content without inventing new features, keeping the emphasis on hardware design, 2-layer PCB layout, high-current circuits, ADC measurement, protection logic, STM32 HAL, FreeRTOS, and industrial communications.
+- Reused the existing manifest-driven auto-gallery pattern for the BMS project by wiring it to `data-project-gallery="BMS"` and keeping a fallback image in the HTML.
+- Updated the static verification script to assert the new BMS content, manifest entry, local media file, and the new project row count.
+- Updated the browser verification script to validate the BMS auto-gallery alongside the forklift and valve galleries while keeping thesis lightbox coverage intact.
+- Improved the gallery manifest generator so folders whose image file shares the same name no longer emit redundant alt text such as `BMS - BMS`.
+- Regenerated `assets/data/project-galleries.js` and verified the BMS folder is now included in the browser-readable manifest.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- Add more forklift project images whenever they are ready; the folder-based workflow now supports them.
-- Add a similar auto-gallery container to any future image-backed projects that should not require manual HTML edits.
+- Add more BMS images whenever they are ready; the shared gallery workflow will render them after sync or while the watcher is running.
+- Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for BMS, forklift, and valve images too.
 - Run a live in-app browser QA pass if the `iab` backend becomes available again.
-- Review and normalize older mojibake text fragments in legacy sections if they become visible in the editor or browser.
-- Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for all project folders.
+- Review and normalize older mojibake text fragments in legacy sections if they become visible in the browser.
 
 ## Technical And Design Decisions
-- Reuse the existing manifest-driven gallery system instead of creating a second forklift-specific media workflow.
-- Keep the static-site approach: local folders are scanned by sync/watch scripts, then rendered in the browser from a generated manifest.
-- Scope browser verification by project key so each auto-rendered project gallery can evolve independently without ambiguous selectors.
-- Keep the fallback image in HTML for graceful rendering before JavaScript enhancement, while letting the manifest replace it at runtime.
+- Reused the existing manifest-driven auto-gallery system instead of creating a BMS-specific image renderer.
+- Kept the BMS project markup aligned with the existing project-row structure so the layout behavior remains shared across desktop, tablet, and mobile breakpoints.
+- Limited the textual content to claims already present in the provided CV excerpt.
+- Fixed duplicate folder/file alt text generation in the sync script because the new `BMS/BMS.png` naming exposed that edge case in a user-visible way.
+- Kept the fallback image in HTML so the project card still renders meaningfully before JavaScript enhances the gallery.
 
 ## Risks And Notes For Next Session
-- This remains generated-data automation, not direct browser filesystem discovery. Without the watcher running, you still need to run the sync script before refresh or publish.
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so visual verification continues to rely on headless Chrome instead of the in-app browser.
-- The generated manifest now covers three project folders: `Forklift-Battery-Protection-Controller`, `Smart-Industrial-Valve-Controller`, and `Graduation-thesis`.
+- This remains a generated-data workflow, not true browser-side folder discovery. Without the watcher running, you still need to run the sync script before refresh or publish when adding images.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive and interaction verification continues to rely on headless Chrome.
+- The generated manifest now covers four project folders and nine images in total.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
 
 ## Lessons Learned
@@ -65,3 +67,8 @@
 - Cause: A generated manifest can become stale if new images are added but the sync step is skipped.
 - Fix: Made both verification scripts run the gallery sync first.
 - Prevention: Couple generated asset data with tests or release scripts so stale manifests are caught before publishing.
+
+### 2026-06-04 - Folder and file names can expose awkward generated alt text
+- Cause: The new asset path `assets/img/projects/BMS/BMS.png` caused the generated alt text to become `BMS - BMS`.
+- Fix: Updated the manifest generator to collapse duplicate folder/file names into a single alt label.
+- Prevention: Treat generated accessibility text as part of the UI surface and harden naming helpers when new folders expose edge cases.

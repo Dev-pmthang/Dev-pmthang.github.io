@@ -1,4 +1,10 @@
 window.PROJECT_GALLERIES = {
+  "BMS": [
+    {
+      "src": "assets/img/projects/BMS/BMS.png",
+      "alt": "BMS"
+    }
+  ],
   "Forklift-Battery-Protection-Controller": [
     {
       "src": "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",

@@ -16,7 +16,14 @@ function toTitleCase(value) {
 function createAltText(folderName, fileName) {
   const projectName = folderName.replace(/[-_]+/g, " ");
   const imageName = path.parse(fileName).name.replace(/[-_]+/g, " ");
-  return `${toTitleCase(projectName)} - ${toTitleCase(imageName)}`.trim();
+  const normalizedProjectName = toTitleCase(projectName).trim();
+  const normalizedImageName = toTitleCase(imageName).trim();
+
+  if (normalizedProjectName.localeCompare(normalizedImageName, "en", { sensitivity: "base" }) === 0) {
+    return normalizedProjectName;
+  }
+
+  return `${normalizedProjectName} - ${normalizedImageName}`.trim();
 }
 
 function getImageSortRank(filePath) {

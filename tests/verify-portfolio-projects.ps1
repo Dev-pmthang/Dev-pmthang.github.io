@@ -55,6 +55,12 @@ $requiredHtmlSnippets = @(
   "Industrial Lithium Battery Protection Controller (04/2026 - Present)",
   'data-project-gallery="Forklift-Battery-Protection-Controller"',
   "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
+  "Lithium Battery Management System - BMS",
+  "Lithium Battery Protection and Monitoring System (12/2025 - Present)",
+  "Designed schematics and 2-layer PCB layouts for lithium battery management systems",
+  "Integrated CAN Bus, RS485, I2C, UART, and SPI to support lithium battery protection",
+  'data-project-gallery="BMS"',
+  "assets/img/projects/BMS/BMS.png",
   "Smart Industrial Valve Controller",
   "Industrial Valve Actuation Controller (03/2025 - Present)",
   "I also designed the H-Bridge motor driver stage for precise stepper motor actuation",
@@ -129,6 +135,8 @@ foreach ($snippet in $requiredJsSnippets) {
 
 $requiredManifestSnippets = @(
   'window.PROJECT_GALLERIES =',
+  '"BMS"',
+  '"assets/img/projects/BMS/BMS.png"',
   '"Forklift-Battery-Protection-Controller"',
   '"assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png"',
   '"Smart-Industrial-Valve-Controller"',
@@ -158,8 +166,8 @@ foreach ($snippet in $removedHtmlSnippets) {
 }
 
 $projectRowCount = ([regex]::Matches($htmlContent, '<div class="project-row">')).Count
-if ($projectRowCount -ne 3) {
-  throw "Expected 3 project rows but found $projectRowCount"
+if ($projectRowCount -ne 4) {
+  throw "Expected 4 project rows but found $projectRowCount"
 }
 
 $galleryItemCount = ([regex]::Matches($htmlContent, 'class="thesis-gallery-item\b')).Count
@@ -169,6 +177,7 @@ if ($galleryItemCount -ne 5) {
 
 $requiredFiles = @(
   "assets/data/project-galleries.js",
+  "assets/img/projects/BMS/BMS.png",
   "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png",
