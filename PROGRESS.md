@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 11:30:21 +07:00
-- Scope: Add the `Lithium Battery Management System - BMS` project to the portfolio, connect it to the shared auto-gallery workflow, and keep verification coverage aligned with the new project count and media folder.
+- Timestamp: 2026-06-04 11:43:09 +07:00
+- Scope: Redesign the `Contact` section into a two-column contact layout with a dedicated Zalo QR card while preserving the existing form behavior and responsive styling.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -13,38 +13,40 @@
 - Gallery sync scripts: `scripts/sync-project-galleries.mjs`, `scripts/sync-project-galleries.ps1`
 - Gallery watch scripts: `scripts/watch-project-galleries.mjs`, `scripts/watch-project-galleries.ps1`
 - Active image-backed project folders: `BMS`, `Forklift-Battery-Protection-Controller`, `Graduation-thesis`, `Smart-Industrial-Valve-Controller`
+- Contact image folder: `assets/img/Contact`
 
 ## Completed
-- Audited `index.html`, the gallery manifest workflow, and both verification scripts before making changes.
-- Confirmed the new folder `assets/img/projects/BMS` contains `BMS.png` and created a git checkpoint commit before editing the project showcase.
-- Added a new `Lithium Battery Management System - BMS` project row in `index.html`, placed between the newer forklift project and the older valve project to preserve reverse-chronological ordering.
-- Wrote portfolio copy from the provided CV content without inventing new features, keeping the emphasis on hardware design, 2-layer PCB layout, high-current circuits, ADC measurement, protection logic, STM32 HAL, FreeRTOS, and industrial communications.
-- Reused the existing manifest-driven auto-gallery pattern for the BMS project by wiring it to `data-project-gallery="BMS"` and keeping a fallback image in the HTML.
-- Updated the static verification script to assert the new BMS content, manifest entry, local media file, and the new project row count.
-- Updated the browser verification script to validate the BMS auto-gallery alongside the forklift and valve galleries while keeping thesis lightbox coverage intact.
-- Improved the gallery manifest generator so folders whose image file shares the same name no longer emit redundant alt text such as `BMS - BMS`.
-- Regenerated `assets/data/project-galleries.js` and verified the BMS folder is now included in the browser-readable manifest.
+- Audited the current `contact` markup, contact form behavior in `assets/js/script.js`, and contact-related styling in `assets/css/style-orange-red.css` before editing.
+- Confirmed the actual QR asset is `assets/img/Contact/Zalo.jpg` and created a git checkpoint commit before modifying the contact section.
+- Rebuilt the `Contact` section into a dedicated `contact-layout` with a left sidebar and right form column.
+- Added two contact cards on the left side: an intro/collaboration card and a Zalo QR card with the actual `Zalo.jpg` asset.
+- Wrapped the existing form in a `contact-form-shell` card, kept the same fields and submit behavior, and improved the JavaScript form selector by targeting `#contact-form` explicitly.
+- Added scoped contact-only CSS for the new card layout, QR container, hover effects, and responsive behavior without touching the project gallery or footer structure.
+- Implemented responsive behavior so the overall contact layout stays two-column on desktop and collapses to one column on tablet/mobile.
+- Added a new static-plus-browser verification flow for the contact section and executed it successfully.
+- Re-ran the existing project showcase tests to confirm the contact refactor did not break project galleries or the thesis lightbox.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- Add more BMS images whenever they are ready; the shared gallery workflow will render them after sync or while the watcher is running.
+- If you rename the Zalo QR asset later, update the `src` in `index.html` to match the new filename or path.
+- Consider adding direct contact metadata later, such as a clickable Zalo ID, email card, or phone card, if you want the left column to carry more than the QR entry point.
 - Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for BMS, forklift, and valve images too.
 - Run a live in-app browser QA pass if the `iab` backend becomes available again.
 - Review and normalize older mojibake text fragments in legacy sections if they become visible in the browser.
 
 ## Technical And Design Decisions
-- Reused the existing manifest-driven auto-gallery system instead of creating a BMS-specific image renderer.
-- Kept the BMS project markup aligned with the existing project-row structure so the layout behavior remains shared across desktop, tablet, and mobile breakpoints.
-- Limited the textual content to claims already present in the provided CV excerpt.
-- Fixed duplicate folder/file alt text generation in the sync script because the new `BMS/BMS.png` naming exposed that edge case in a user-visible way.
-- Kept the fallback image in HTML so the project card still renders meaningfully before JavaScript enhances the gallery.
+- Limited the scope to the `contact` section only and introduced contact-specific class names so header, footer, projects, and the thesis lightbox remain unaffected.
+- Used the actual asset path `assets/img/Contact/Zalo.jpg` instead of a placeholder because the file is already present in the workspace.
+- Kept the form submission flow unchanged and only tightened the selector from `querySelector("form")` to `getElementById("contact-form")` for more explicit binding.
+- Chose card-based layout and hover motion that matches the existing site language: dark surfaces, rounded corners, subtle gradients, soft red/silver glow, and controlled scaling.
+- Added a dedicated contact verification script instead of overloading the project gallery tests so the contact section can evolve independently.
 
 ## Risks And Notes For Next Session
-- This remains a generated-data workflow, not true browser-side folder discovery. Without the watcher running, you still need to run the sync script before refresh or publish when adding images.
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive and interaction verification continues to rely on headless Chrome.
-- The generated manifest now covers four project folders and nine images in total.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive verification for the contact section continues to rely on headless Chrome screenshots and computed-style checks.
+- The contact section now depends on the presence of `assets/img/Contact/Zalo.jpg`; if that asset is moved or renamed, the QR card will need its `src` updated.
+- The generated manifest still covers four project folders and nine images in total.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
 
 ## Lessons Learned
@@ -72,3 +74,8 @@
 - Cause: The new asset path `assets/img/projects/BMS/BMS.png` caused the generated alt text to become `BMS - BMS`.
 - Fix: Updated the manifest generator to collapse duplicate folder/file names into a single alt label.
 - Prevention: Treat generated accessibility text as part of the UI surface and harden naming helpers when new folders expose edge cases.
+
+### 2026-06-04 - Prefix-based regex checks can overcount component variants
+- Cause: The initial contact test counted `contact-card-heading` along with the two main `contact-card` blocks because the regex matched the shared prefix.
+- Fix: Narrowed the assertion to count only `class="contact-card contact-card--..."` blocks.
+- Prevention: When testing utility or BEM-like class names, scope regex assertions to the exact variant pattern instead of the shared prefix.

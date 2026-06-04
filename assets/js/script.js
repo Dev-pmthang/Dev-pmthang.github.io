@@ -20,7 +20,7 @@ document.getElementById('contact-btn').addEventListener('click', () => {
   });
 });
 
-const form = document.querySelector('form');
+const form = document.getElementById("contact-form");
 
 const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");

@@ -432,24 +432,86 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
 
   <section class="contact" id="contact">
     <h2 class="heading">Contact <span>Me</span></h2>
-    <form id="contact-form">
-      <div class="input-group">
-        <div class="input-box">
-          <input type="text" name="name" placeholder="Full Name" required>
-          <input type="email" name="email" id="email" placeholder="Email">
-          <small class="error-message" id="email-error"></small>
-        </div>
-        <div class="input-box">
-          <input type="number" name="phone" id="phone" placeholder="Phone Number" class="input-phone">
-          <small class="error-message" id="phone-error"></small>
-          <input type="text" name="subject" placeholder="Subject">
-        </div>
+    <div class="contact-layout">
+      <div class="contact-sidebar">
+        <article class="contact-card contact-card--intro">
+          <div class="contact-card-heading">
+            <span class="contact-badge">
+              <i class="fa-solid fa-microchip"></i>
+              Embedded Collaboration
+            </span>
+            <h3>Let's Build Something Reliable</h3>
+          </div>
+          <p>
+            For embedded hardware, firmware bring-up, industrial automation, or product integration discussions,
+            send a detailed message through the form or connect instantly via Zalo.
+          </p>
+          <div class="contact-highlights">
+            <div class="contact-highlight">
+              <i class="fa-solid fa-diagram-project"></i>
+              <div>
+                <h4>Project Discussions</h4>
+                <p>Share your system goals, technical constraints, and deployment context for a focused conversation.</p>
+              </div>
+            </div>
+            <div class="contact-highlight">
+              <i class="fa-solid fa-comments"></i>
+              <div>
+                <h4>Quick Connection</h4>
+                <p>Use Zalo for a fast introduction, then continue with the form when you need a structured brief.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="contact-card contact-card--zalo">
+          <div class="contact-card-heading">
+            <span class="contact-badge contact-badge--zalo">
+              <i class="fa-solid fa-qrcode"></i>
+              Zalo
+            </span>
+            <h3>Connect via Zalo</h3>
+          </div>
+          <p>Scan the QR code to connect with me on Zalo.</p>
+          <div class="contact-qr-shell">
+            <img src="assets/img/Contact/Zalo.jpg" alt="Zalo QR code to connect with MINH THANG"
+              class="contact-qr-image">
+          </div>
+        </article>
       </div>
-      <div class="input-group-2">
-        <textarea name="message" placeholder="Your Message" cols="30" rows="10" required></textarea>
-        <input type="submit" value="Send Message" class="btn">
+
+      <div class="contact-form-shell">
+        <div class="contact-card-heading">
+          <span class="contact-badge">
+            <i class="fa-solid fa-paper-plane"></i>
+            Direct Message
+          </span>
+          <h3>Send a Message</h3>
+        </div>
+        <p class="contact-form-copy">
+          Share your project scope, hardware requirements, or deployment goals. I will review your message and reply
+          through the contact details you provide.
+        </p>
+        <form id="contact-form">
+          <div class="input-group">
+            <div class="input-box">
+              <input type="text" name="name" placeholder="Full Name" required>
+              <input type="email" name="email" id="email" placeholder="Email">
+              <small class="error-message" id="email-error"></small>
+            </div>
+            <div class="input-box">
+              <input type="number" name="phone" id="phone" placeholder="Phone Number" class="input-phone">
+              <small class="error-message" id="phone-error"></small>
+              <input type="text" name="subject" placeholder="Subject">
+            </div>
+          </div>
+          <div class="input-group-2">
+            <textarea name="message" placeholder="Your Message" cols="30" rows="10" required></textarea>
+            <input type="submit" value="Send Message" class="btn">
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </section>
 
   <footer class="footer">
