@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 08:58:16 +07:00
-- Scope: Update the Graduation Thesis project gallery to use the new local images in `assets/img/projects/Graduation-thesis` and validate the media references.
+- Timestamp: 2026-06-04 09:14:04 +07:00
+- Scope: Rewrite the Graduation Thesis project as a LoRa Mesh environmental monitoring thesis and switch its gallery to the new local image set.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -25,9 +25,13 @@
 - Added a lightweight PowerShell verification script to confirm the inserted title, summary, description, and key tags are present in `index.html`.
 - Executed the verification script successfully after normalizing whitespace handling for multiline HTML content.
 - Confirmed the user replaced the Graduation Thesis image set directly in `assets/img/projects/Graduation-thesis`.
-- Updated the Graduation Thesis project card to render the new `Full_Board.jpg`, `Board_Altium.JPG`, and `Tong_Quang.jpg` files from that folder.
-- Added a dedicated thesis gallery modifier so wider hardware images do not inherit the older portrait-heavy crop ratio.
-- Extended the verification script to assert the new thesis image references and file existence, then executed it successfully.
+- Updated the Graduation Thesis project card to render local images directly from `assets/img/projects/Graduation-thesis`.
+- Added a dedicated thesis gallery modifier so project-specific media ratios do not inherit the older portrait-heavy crop ratio.
+- Extended the verification script to assert thesis image references and file existence, then executed it successfully.
+- Replaced the previous thesis content with the LoRa Mesh environmental monitoring thesis description, role context, and final grade.
+- Switched the thesis gallery to the user-provided `Master.jpg`, `Node.jpg`, and `Bo_tri.jpg` media set in `assets/img/projects/Graduation-thesis`.
+- Retuned the thesis gallery aspect ratios so one landscape hero image and two portrait support images display more cleanly.
+- Updated the verification script to assert the new thesis title, summary, tags, image references, and file existence, then executed it successfully.
 
 ## In Progress
 - No active implementation task in this session.
@@ -38,6 +42,7 @@
 - Review text encoding in source files and normalize if mojibake appears in the editor or browser.
 - Replace the text-only Forklift Battery Protection Controller entry with real project media when image or demo assets become available.
 - Run a manual browser QA pass for the updated thesis gallery once an in-app browser session is available.
+- Clean up unused legacy thesis images in the folder later if you decide they are no longer needed.
 
 ## Technical And Design Decisions
 - Preserve the current static-site architecture unless a future task requires a real build pipeline.
@@ -46,6 +51,7 @@
 - Keep project descriptions concise, technical, and focused on system behavior plus real-world operating value.
 - Insert the new project as a content-only `project-row` because no image or video asset was provided for this session.
 - Use project-specific gallery modifiers when new media shapes differ significantly from the original portrait-oriented gallery assumptions.
+- Prefer project text and gallery media that describe the same real system revision to avoid mismatched storytelling in the portfolio.
 
 ## Risks And Notes For Next Session
 - No automated test harness exists yet; any future logic change will need a lightweight test approach added as part of the task.
@@ -53,8 +59,8 @@
 - Some console output shows mojibake in emoji/Vietnamese text, which may indicate an encoding mismatch in the terminal path even if the files themselves are still valid.
 - External dependencies include CDN-hosted icon/fonts and a live Formspree endpoint.
 - The new forklift project currently has no dedicated media block, so visual consistency can be improved later by adding a project image or demo video.
-- Browser-based visual verification could not run in this session because the in-app browser backend was unavailable.
-- The updated Graduation Thesis images are now wired correctly, but the project text was intentionally left unchanged in this session.
+- Browser-based visual verification is still blocked because the in-app browser backend remains unavailable (`Browser is not available: iab`).
+- The thesis folder now contains both the older hardware images and the newer LoRa environmental monitoring images; only the newer set is referenced in `index.html`.
 
 ## Lessons Learned
 ### 2026-06-04 - Git checkpoint workflow could not be applied
@@ -91,3 +97,8 @@
 - Cause: The in-app browser backend was not available for this session.
 - Fix: Completed text-based verification and file existence checks, then recorded the missing visual QA as follow-up work.
 - Prevention: Attempt browser verification after each frontend change, but keep a fallback verification script so the session can still produce evidence of correctness.
+
+### 2026-06-04 - Thesis media and thesis narrative must stay aligned
+- Cause: The original thesis text described a different hardware theme than the newly supplied LoRa environmental monitoring photos.
+- Fix: Rewrote the thesis title, summary, description, tags, and image references together in the same session.
+- Prevention: When swapping a project's image set, review and update the corresponding project copy in the same change.

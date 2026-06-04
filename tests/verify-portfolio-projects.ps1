@@ -11,9 +11,15 @@ $requiredSnippets = @(
   "<span>ESP32-S3</span>",
   "<span>EMI/EMC PCB Design</span>",
   "<span>Embedded Firmware</span>",
-  "assets/img/projects/Graduation-thesis/Full_Board.jpg",
-  "assets/img/projects/Graduation-thesis/Board_Altium.JPG",
-  "assets/img/projects/Graduation-thesis/Tong_Quang.jpg",
+  "Application of LoRa Mesh Network in Environmental Monitoring",
+  "Graduation Thesis | Embedded Hardware & Firmware Engineer (01/2024 - 05/2024)",
+  "a LoRa Mesh routing algorithm for stable long-range communication",
+  "final score of 9.17/10 (Grade A).",
+  "<span>LoRa Mesh</span>",
+  "<span>Firebase</span>",
+  "assets/img/projects/Graduation-thesis/Master.jpg",
+  "assets/img/projects/Graduation-thesis/Node.jpg",
+  "assets/img/projects/Graduation-thesis/Bo_tri.jpg",
   "project-media-gallery--thesis"
 )
 
@@ -26,9 +32,9 @@ foreach ($snippet in $requiredSnippets) {
 }
 
 $requiredFiles = @(
-  "assets/img/projects/Graduation-thesis/Full_Board.jpg",
-  "assets/img/projects/Graduation-thesis/Board_Altium.JPG",
-  "assets/img/projects/Graduation-thesis/Tong_Quang.jpg"
+  "assets/img/projects/Graduation-thesis/Master.jpg",
+  "assets/img/projects/Graduation-thesis/Node.jpg",
+  "assets/img/projects/Graduation-thesis/Bo_tri.jpg"
 )
 
 foreach ($file in $requiredFiles) {

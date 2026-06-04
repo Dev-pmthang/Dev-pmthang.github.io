@@ -742,12 +742,12 @@ section {
 }
 
 .project-media-gallery--thesis .media-item {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
 }
 
 .project-media-gallery--thesis .media-item--hero {
   grid-column: 1 / -1;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3;
 }
 
 /* --- NỘI DUNG (BÊN PHẢI) --- */
