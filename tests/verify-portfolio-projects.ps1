@@ -53,6 +53,8 @@ $normalizedManifest = ($manifestContent -replace "\s+", " ").Trim()
 $requiredHtmlSnippets = @(
   "Forklift Battery Protection Controller",
   "Industrial Lithium Battery Protection Controller (04/2026 - Present)",
+  'data-project-gallery="Forklift-Battery-Protection-Controller"',
+  "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
   "Smart Industrial Valve Controller",
   "Industrial Valve Actuation Controller (03/2025 - Present)",
   "I also designed the H-Bridge motor driver stage for precise stepper motor actuation",
@@ -127,6 +129,8 @@ foreach ($snippet in $requiredJsSnippets) {
 
 $requiredManifestSnippets = @(
   'window.PROJECT_GALLERIES =',
+  '"Forklift-Battery-Protection-Controller"',
+  '"assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png"',
   '"Smart-Industrial-Valve-Controller"',
   '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png"',
   '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png"'
@@ -165,6 +169,7 @@ if ($galleryItemCount -ne 5) {
 
 $requiredFiles = @(
   "assets/data/project-galleries.js",
+  "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png",
   "assets/img/projects/Graduation-thesis/Master.jpg",

@@ -1,4 +1,10 @@
 window.PROJECT_GALLERIES = {
+  "Forklift-Battery-Protection-Controller": [
+    {
+      "src": "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
+      "alt": "Forklift Battery Protection Controller - BMS RELAY"
+    }
+  ],
   "Graduation-thesis": [
     {
       "src": "assets/img/projects/Graduation-thesis/Master.jpg",

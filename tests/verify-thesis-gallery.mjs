@@ -18,6 +18,9 @@ const thesisImages = [
   "Full_Board.jpg",
   "Board_Altium.JPG"
 ];
+const forkliftImages = [
+  "BMS_RELAY.png"
+];
 const valveImages = [
   "HP_Valves_Slave.png",
   "HP_Valves_Slave_BOT.png"
@@ -388,36 +391,70 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
     `(() => {
       const gallery = document.querySelector(".thesis-gallery");
       const items = document.querySelectorAll(".thesis-gallery-item");
-      const valveProjectImages = Array.from(document.querySelectorAll('.auto-project-gallery-thumb'));
+      const getProjectImages = (projectKey) =>
+        Array.from(document.querySelectorAll(\`[data-project-gallery="\${projectKey}"] .auto-project-gallery-thumb\`));
+      const autoGalleryReady = (projectImages, expectedImages) =>
+        projectImages.length >= expectedImages.length
+        && expectedImages.every((name) =>
+          projectImages.some((image) => (image.getAttribute("src") || "").includes(name))
+        )
+        && projectImages.every((image) => image.complete && image.naturalWidth > 0 && image.naturalHeight > 0);
+      const forkliftProjectImages = getProjectImages("Forklift-Battery-Protection-Controller");
+      const valveProjectImages = getProjectImages("Smart-Industrial-Valve-Controller");
       const thumbsReady = Array.from(document.querySelectorAll(".thesis-gallery-thumb"))
         .every((img) => img.complete && img.naturalWidth > 0 && img.naturalHeight > 0);
-      const valveReady = valveProjectImages.length === ${valveImages.length}
-        && valveProjectImages.every((img) => img.complete && img.naturalWidth > 0 && img.naturalHeight > 0);
-      return Boolean(gallery) && items.length === 5 && thumbsReady && valveReady;
+      return Boolean(gallery)
+        && items.length === 5
+        && thumbsReady
+        && autoGalleryReady(forkliftProjectImages, ${JSON.stringify(forkliftImages)})
+        && autoGalleryReady(valveProjectImages, ${JSON.stringify(valveImages)});
     })()`
   );
 
   const initialState = await evaluateJson(
     cdp,
     `(() => {
+      const getAutoProjectState = (projectKey) => {
+        const galleryRoot = document.querySelector(\`[data-project-gallery="\${projectKey}"]\`);
+        const row = galleryRoot?.closest(".project-row");
+        const gallery = galleryRoot?.querySelector(".auto-project-gallery");
+        const projectImages = Array.from(galleryRoot?.querySelectorAll(".auto-project-gallery-thumb") ?? []);
+
+        return {
+          rowExists: Boolean(row),
+          galleryExists: Boolean(galleryRoot),
+          imageCount: projectImages.length,
+          flexDirection: row ? getComputedStyle(row).flexDirection : null,
+          rowFitsViewport: row ? row.getBoundingClientRect().right <= window.innerWidth + 2 : false,
+          rowNoOverflow: row ? row.scrollWidth <= row.clientWidth + 2 : false,
+          galleryNoOverflow: galleryRoot ? galleryRoot.scrollWidth <= galleryRoot.clientWidth + 2 : false,
+          gallerySingleClass: gallery ? gallery.classList.contains("auto-project-gallery--single") : false,
+          images: projectImages.map((image) => ({
+            src: image.getAttribute("src") || "",
+            width: image.clientWidth,
+            height: image.clientHeight,
+            objectFit: getComputedStyle(image).objectFit,
+            transition: getComputedStyle(image).transitionProperty,
+            overflow: getComputedStyle(image.closest(".auto-project-gallery-item")).overflow
+          }))
+        };
+      };
+
       const thesisRow = document.querySelector(".project-media-gallery--thesis")?.closest(".project-row");
       const gallery = document.querySelector(".thesis-gallery");
       const lightbox = document.querySelector(".thesis-lightbox");
       const galleryItems = Array.from(document.querySelectorAll(".thesis-gallery-item"));
-      const valveGallery = document.querySelector(".project-media-gallery--auto");
-      const valveRow = valveGallery?.closest(".project-row");
-      const valveProjectImages = Array.from(document.querySelectorAll(".auto-project-gallery-thumb"));
 
       return {
         thesisRowExists: Boolean(thesisRow),
         galleryExists: Boolean(gallery),
         lightboxExists: Boolean(lightbox),
-        valveRowExists: Boolean(valveRow),
-        valveGalleryExists: Boolean(valveGallery),
-        valveImageCount: valveProjectImages.length,
+        autoProjects: {
+          forklift: getAutoProjectState("Forklift-Battery-Protection-Controller"),
+          valve: getAutoProjectState("Smart-Industrial-Valve-Controller")
+        },
         itemCount: galleryItems.length,
         flexDirection: thesisRow ? getComputedStyle(thesisRow).flexDirection : null,
-        valveFlexDirection: valveRow ? getComputedStyle(valveRow).flexDirection : null,
         columnCount: gallery
           ? getComputedStyle(gallery).gridTemplateColumns.split(" ").filter(Boolean).length
           : 0,
@@ -430,26 +467,6 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
         galleryNoOverflow: gallery
           ? gallery.scrollWidth <= gallery.clientWidth + 2
           : false,
-        valveRowFitsViewport: valveRow
-          ? valveRow.getBoundingClientRect().right <= window.innerWidth + 2
-          : false,
-        valveRowNoOverflow: valveRow
-          ? valveRow.scrollWidth <= valveRow.clientWidth + 2
-          : false,
-        valveGalleryNoOverflow: valveGallery
-          ? valveGallery.scrollWidth <= valveGallery.clientWidth + 2
-          : false,
-        valveGallerySingleClass: valveGallery
-          ? valveGallery.querySelector(".auto-project-gallery")?.classList.contains("auto-project-gallery--single") ?? false
-          : false,
-        valveImages: valveProjectImages.map((image) => ({
-          src: image.getAttribute("src") || "",
-          width: image.clientWidth,
-          height: image.clientHeight,
-          objectFit: getComputedStyle(image).objectFit,
-          transition: getComputedStyle(image).transitionProperty,
-          overflow: getComputedStyle(image.closest(".auto-project-gallery-item")).overflow
-        })),
         thumbs: galleryItems.map((item) => {
           const image = item.querySelector("img");
           return {
@@ -469,28 +486,46 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
   assert(initialState.thesisRowExists, `${viewport.name}: thesis project row exists.`);
   assert(initialState.galleryExists, `${viewport.name}: thesis gallery exists.`);
   assert(initialState.lightboxExists, `${viewport.name}: thesis lightbox exists.`);
-  assert(initialState.valveRowExists, `${viewport.name}: valve controller project row exists.`);
-  assert(initialState.valveGalleryExists, `${viewport.name}: valve controller media block exists.`);
-  assert(initialState.valveImageCount === valveImages.length, `${viewport.name}: valve controller gallery renders ${valveImages.length} images.`);
   assert(initialState.itemCount === thesisImages.length, `${viewport.name}: thesis gallery renders ${thesisImages.length} images.`);
   assert(initialState.flexDirection === viewport.expectedFlex, `${viewport.name}: .project-row keeps expected flex direction ${viewport.expectedFlex}.`);
-  assert(initialState.valveFlexDirection === viewport.expectedFlex, `${viewport.name}: valve project row keeps expected flex direction ${viewport.expectedFlex}.`);
   assert(initialState.columnCount === viewport.expectedColumns, `${viewport.name}: thesis gallery uses ${viewport.expectedColumns} column(s).`);
   assert(initialState.thesisRowFitsViewport, `${viewport.name}: thesis project row fits inside the viewport.`);
   assert(initialState.thesisRowNoOverflow, `${viewport.name}: thesis project row has no internal horizontal overflow.`);
   assert(initialState.galleryNoOverflow, `${viewport.name}: thesis gallery has no internal horizontal overflow.`);
-  assert(initialState.valveRowFitsViewport, `${viewport.name}: valve project row fits inside the viewport.`);
-  assert(initialState.valveRowNoOverflow, `${viewport.name}: valve project row has no internal horizontal overflow.`);
-  assert(initialState.valveGalleryNoOverflow, `${viewport.name}: valve project media block has no internal horizontal overflow.`);
   assert(!initialState.lightboxOpen, `${viewport.name}: lightbox starts closed.`);
-  assert(!initialState.valveGallerySingleClass, `${viewport.name}: valve project gallery switches to multi-image layout.`);
 
-  initialState.valveImages.forEach((image, index) => {
-    assert(image.src.includes(valveImages[index]), `${viewport.name}: valve gallery image ${index + 1} uses ${valveImages[index]}.`);
-    assert(image.width > 0 && image.height > 0, `${viewport.name}: valve gallery image ${index + 1} renders with visible dimensions.`);
-    assert(image.objectFit === "contain", `${viewport.name}: valve gallery image ${index + 1} uses object-fit contain.`);
-    assert(image.transition.includes("transform"), `${viewport.name}: valve gallery image ${index + 1} keeps smooth transform transition.`);
-    assert(image.overflow === "hidden", `${viewport.name}: valve gallery image ${index + 1} stays clipped inside its card.`);
+  [
+    {
+      key: "forklift",
+      label: "forklift controller",
+      expectedImages: forkliftImages
+    },
+    {
+      key: "valve",
+      label: "valve controller",
+      expectedImages: valveImages
+    }
+  ].forEach((project) => {
+    const state = initialState.autoProjects[project.key];
+
+    assert(state.rowExists, `${viewport.name}: ${project.label} project row exists.`);
+    assert(state.galleryExists, `${viewport.name}: ${project.label} media block exists.`);
+    assert(state.imageCount >= project.expectedImages.length, `${viewport.name}: ${project.label} gallery renders at least ${project.expectedImages.length} image(s).`);
+    assert(state.flexDirection === viewport.expectedFlex, `${viewport.name}: ${project.label} project row keeps expected flex direction ${viewport.expectedFlex}.`);
+    assert(state.rowFitsViewport, `${viewport.name}: ${project.label} project row fits inside the viewport.`);
+    assert(state.rowNoOverflow, `${viewport.name}: ${project.label} project row has no internal horizontal overflow.`);
+    assert(state.galleryNoOverflow, `${viewport.name}: ${project.label} media block has no internal horizontal overflow.`);
+    assert(state.gallerySingleClass === (state.imageCount === 1), `${viewport.name}: ${project.label} single-gallery class matches the image count.`);
+
+    project.expectedImages.forEach((expectedImage, index) => {
+      const matchedImage = state.images.find((image) => image.src.includes(expectedImage));
+
+      assert(Boolean(matchedImage), `${viewport.name}: ${project.label} gallery includes ${expectedImage}.`);
+      assert(matchedImage.width > 0 && matchedImage.height > 0, `${viewport.name}: ${project.label} image ${index + 1} renders with visible dimensions.`);
+      assert(matchedImage.objectFit === "contain", `${viewport.name}: ${project.label} image ${index + 1} uses object-fit contain.`);
+      assert(matchedImage.transition.includes("transform"), `${viewport.name}: ${project.label} image ${index + 1} keeps smooth transform transition.`);
+      assert(matchedImage.overflow === "hidden", `${viewport.name}: ${project.label} image ${index + 1} stays clipped inside its card.`);
+    });
   });
 
   initialState.thumbs.forEach((thumb, index) => {
