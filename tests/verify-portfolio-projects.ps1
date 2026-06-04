@@ -1,11 +1,54 @@
 $ErrorActionPreference = "Stop"
 
+$syncScript = "scripts/sync-project-galleries.ps1"
+$watchScript = "scripts/watch-project-galleries.mjs"
+if (-not (Test-Path $syncScript)) {
+  throw "Missing sync script: $syncScript"
+}
+
+if (-not (Test-Path $watchScript)) {
+  throw "Missing watch script: $watchScript"
+}
+
+powershell -ExecutionPolicy Bypass -File $syncScript
+
+if ($LASTEXITCODE -ne 0) {
+  throw "Project gallery sync failed during verification."
+}
+
+$watchStdout = Join-Path $env:TEMP "watch-project-galleries-out.txt"
+$watchStderr = Join-Path $env:TEMP "watch-project-galleries-err.txt"
+Remove-Item $watchStdout, $watchStderr -ErrorAction SilentlyContinue
+
+$watchProcess = Start-Process -FilePath "node" `
+  -ArgumentList $watchScript `
+  -PassThru -NoNewWindow `
+  -RedirectStandardOutput $watchStdout `
+  -RedirectStandardError $watchStderr
+
+Start-Sleep -Milliseconds 900
+
+if ($watchProcess.HasExited) {
+  $watchError = if (Test-Path $watchStderr) { Get-Content -Raw $watchStderr } else { "" }
+  throw "Gallery watch script exited unexpectedly during startup.`n$watchError"
+}
+
+Stop-Process -Id $watchProcess.Id -Force
+Start-Sleep -Milliseconds 200
+
+$watchOutput = if (Test-Path $watchStdout) { Get-Content -Raw $watchStdout } else { "" }
+if ($watchOutput -notmatch "Watching project image folders:" -or $watchOutput -notmatch "Synced ") {
+  throw "Gallery watch script did not report the expected startup messages."
+}
+
 $htmlContent = Get-Content -Raw "index.html"
 $cssContent = Get-Content -Raw "assets/css/style-orange-red.css"
 $jsContent = Get-Content -Raw "assets/js/script.js"
+$manifestContent = Get-Content -Raw "assets/data/project-galleries.js"
 $normalizedHtml = ($htmlContent -replace "\s+", " ").Trim()
 $normalizedCss = ($cssContent -replace "\s+", " ").Trim()
 $normalizedJs = ($jsContent -replace "\s+", " ").Trim()
+$normalizedManifest = ($manifestContent -replace "\s+", " ").Trim()
 
 $requiredHtmlSnippets = @(
   "Forklift Battery Protection Controller",
@@ -14,7 +57,9 @@ $requiredHtmlSnippets = @(
   "Industrial Valve Actuation Controller (03/2025 - Present)",
   "I also designed the H-Bridge motor driver stage for precise stepper motor actuation",
   "testing and deployment at TS FOOD factory",
-  "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
+  'data-project-gallery="Smart-Industrial-Valve-Controller"',
+  'data-project-gallery-items',
+  "assets/data/project-galleries.js",
   "Application of LoRa Mesh Network in Environmental Monitoring",
   "Graduation Thesis | Embedded Hardware & Firmware Engineer (01/2024 - 05/2024)",
   "a LoRa Mesh routing algorithm for stable long-range communication",
@@ -39,9 +84,11 @@ foreach ($snippet in $requiredHtmlSnippets) {
 }
 
 $requiredCssSnippets = @(
-  ".project-media-gallery--single",
-  ".project-media-frame",
-  ".project-media-gallery--single .media-item",
+  ".project-media-gallery--auto",
+  ".auto-project-gallery",
+  ".auto-project-gallery--single",
+  ".auto-project-gallery-item",
+  ".auto-project-gallery-thumb",
   ".thesis-gallery-item",
   ".thesis-gallery-item:hover .thesis-gallery-thumb",
   ".thesis-lightbox",
@@ -59,6 +106,10 @@ foreach ($snippet in $requiredCssSnippets) {
 }
 
 $requiredJsSnippets = @(
+  'const projectGalleryManifest = window.PROJECT_GALLERIES || {}',
+  'const autoProjectGalleries = document.querySelectorAll("[data-project-gallery]")',
+  'const galleryContainer = galleryRoot.querySelector("[data-project-gallery-items]")',
+  'galleryContainer.classList.toggle("auto-project-gallery--single", galleryItems.length === 1)',
   'const thesisGalleryItems = document.querySelectorAll(".thesis-gallery-item")',
   'const thesisLightbox = document.querySelector(".thesis-lightbox")',
   'const openThesisLightbox = (trigger) =>',
@@ -71,6 +122,19 @@ $requiredJsSnippets = @(
 foreach ($snippet in $requiredJsSnippets) {
   if (-not $normalizedJs.Contains($snippet)) {
     throw "Missing expected JS snippet: $snippet"
+  }
+}
+
+$requiredManifestSnippets = @(
+  'window.PROJECT_GALLERIES =',
+  '"Smart-Industrial-Valve-Controller"',
+  '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png"',
+  '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png"'
+)
+
+foreach ($snippet in $requiredManifestSnippets) {
+  if (-not $normalizedManifest.Contains($snippet)) {
+    throw "Missing expected manifest snippet: $snippet"
   }
 }
 
@@ -100,7 +164,9 @@ if ($galleryItemCount -ne 5) {
 }
 
 $requiredFiles = @(
+  "assets/data/project-galleries.js",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
+  "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png",
   "assets/img/projects/Graduation-thesis/Master.jpg",
   "assets/img/projects/Graduation-thesis/Node.jpg",
   "assets/img/projects/Graduation-thesis/Bo_tri.jpg",

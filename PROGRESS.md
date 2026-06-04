@@ -1,71 +1,74 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 10:11:48 +07:00
-- Scope: Realign the `Projects` section with the project media currently present in `assets/img/projects`, add `Smart Industrial Valve Controller`, and keep the thesis gallery behavior intact.
+- Timestamp: 2026-06-04 10:31:00 +07:00
+- Scope: Automate the `Smart Industrial Valve Controller` project gallery so newly added images can be rendered without editing `index.html` again.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
 - Entry point: `index.html`
 - Active stylesheet: `assets/css/style-orange-red.css`
 - Behavior script: `assets/js/script.js`
-- Primary assets: `assets/img/*`, `assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf`
+- Generated gallery manifest: `assets/data/project-galleries.js`
+- Gallery sync scripts: `scripts/sync-project-galleries.mjs`, `scripts/sync-project-galleries.ps1`
+- Gallery watch scripts: `scripts/watch-project-galleries.mjs`, `scripts/watch-project-galleries.ps1`
 
 ## Completed
-- Audited the current `Projects` markup and the real contents of `assets/img/projects` before editing.
-- Confirmed the project media folder now contains only `Graduation-thesis` and `Smart-Industrial-Valve-Controller`.
-- Confirmed the old `Smart Stair Light` project image references in `index.html` pointed to assets that are already deleted from the working tree.
-- Kept the `Forklift Battery Protection Controller` as the newest text-only project entry.
-- Added `Smart Industrial Valve Controller` as a new project row with its local image `assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png`.
-- Wrote new portfolio copy for `Smart Industrial Valve Controller`, emphasizing 4-layer PCB design, industrial 4-20 mA / 0-10 V interfaces, the H-Bridge motor driver, STM32 + FreeRTOS firmware, closed-loop control, field deployment, and ongoing V2 development.
-- Removed the outdated `Smart Stair Light` project blocks from `index.html` so the page no longer references missing project assets.
-- Added a scoped single-image media style for board-render style projects without affecting the thesis gallery or other shared project styles.
-- Preserved the existing `Graduation Thesis` multi-image gallery and lightbox behavior.
-- Extended the static verification script to assert the new valve project content and to ensure removed `Smart Stair Light` references are no longer present.
-- Extended the headless browser verification script to confirm the valve project media block renders correctly across desktop, tablet, and mobile while the thesis lightbox still works.
-- Executed both verification scripts successfully after the final edits.
+- Audited the current valve project markup, stylesheet, JavaScript, and the new image files in `assets/img/projects/Smart-Industrial-Valve-Controller`.
+- Confirmed a new image `HP_Valves_Slave_BOT.png` was added to the valve project folder after the previous session.
+- Replaced the valve project's hard-coded single-image markup with a manifest-driven auto gallery container in `index.html`.
+- Added a generated gallery manifest file at `assets/data/project-galleries.js`.
+- Added a Node-based sync script that scans `assets/img/projects/*` and regenerates the manifest automatically.
+- Added a Windows-friendly PowerShell wrapper so gallery sync can be run with a short local command.
+- Added an optional local watcher script so project image changes can resync the manifest automatically during editing sessions.
+- Added runtime JavaScript that reads `window.PROJECT_GALLERIES` and renders all images for the valve project automatically.
+- Added scoped CSS for the new `auto-project-gallery` layout, including responsive multi-image rendering and contained hover zoom.
+- Kept the `Graduation Thesis` custom gallery and lightbox behavior unchanged.
+- Updated verification scripts so they run the sync step first, validate the generated manifest, and confirm the valve gallery renders both board images.
+- Added a watcher startup smoke test so the local auto-watch workflow is also verified during testing.
+- Executed both verification scripts successfully after the final implementation.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- Add real project media for the `Forklift Battery Protection Controller` entry when assets are available.
+- Add a similar auto-gallery container to other future image-backed projects if you want the same workflow elsewhere.
+- Add media to the `Forklift Battery Protection Controller` project when assets are ready.
 - Run a live in-app browser QA pass if the `iab` backend becomes available again.
 - Review and normalize older mojibake text fragments in legacy sections if they become visible in the editor or browser.
-- Decide whether the remaining non-project asset deletions in the workspace should be kept permanently if they are no longer needed.
-- Consider adding a dedicated local image preview/lightbox for future single-image project cards if more hardware render projects are added.
+- Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for all project folders.
 
 ## Technical And Design Decisions
-- Treat the actual contents of `assets/img/projects` as the source of truth for which image-backed project entries should remain in the portfolio.
-- Keep `Forklift Battery Protection Controller` because it is a valid active project entry even without a media folder yet.
-- Remove stale project blocks that referenced deleted local assets instead of leaving broken images in the portfolio.
-- Add a dedicated `.project-media-gallery--single` variant so single hardware renders can use `object-fit: contain` without affecting the thesis gallery grid.
-- Keep the thesis lightbox implementation unchanged because its scope and behavior are already isolated and verified.
-- Keep the new valve controller copy concise and end-to-end, with explicit emphasis on the H-Bridge motor driver, industrial communication, and deployment work.
+- Keep the site static with no framework or build pipeline.
+- Do not attempt direct folder listing from the browser because a static website cannot reliably enumerate local directory contents across deployment environments.
+- Use a generated JavaScript manifest (`window.PROJECT_GALLERIES`) instead of `fetch(...)` so the gallery also works when the site is opened from simple static hosting without extra API endpoints.
+- Keep the valve project gallery generic and data-driven, while preserving the thesis gallery as a custom handcrafted interaction because its layout and lightbox behavior are more specialized.
+- Sort generated gallery images so primary views such as `top/front/master` appear before `BOT/BOTTOM/BACK` views.
+- Make the verification scripts run the sync step first so tests also act as a safe pre-publish refresh for gallery data.
 
 ## Risks And Notes For Next Session
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so visual verification again relied on headless Chrome instead of the in-app browser.
-- The project list is now aligned with the currently available project media folders, but additional project assets can be reintroduced later if you restore them intentionally.
-- Some terminal output still shows mojibake, which still looks like a console encoding issue rather than a confirmed HTML/CSS corruption issue.
+- This is the most practical automation possible for a static site, but it is not true zero-step filesystem discovery in the browser. Without the watcher running, you still need to run the sync script before refreshing or publishing.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so visual verification continues to rely on headless Chrome instead of the in-app browser.
+- The generated manifest currently includes every image folder under `assets/img/projects`, even if some folders are still rendered with handcrafted HTML.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
 
 ## Lessons Learned
-### 2026-06-04 - The media folder should drive image-backed project entries
-- Cause: The HTML still referenced older `Smart Stair Light` assets even after those local files had been deleted.
-- Fix: Realigned the `Projects` section with the directories that actually exist in `assets/img/projects`.
-- Prevention: Before editing project cards, inspect the real media folders and remove any stale references to deleted assets.
+### 2026-06-04 - Static websites cannot truly auto-discover new files from project folders
+- Cause: Browsers do not have a reliable, portable way to enumerate folder contents from a static deployment with only HTML, CSS, and JavaScript.
+- Fix: Added a manifest generation step that scans the image folders locally and writes a browser-readable JavaScript manifest.
+- Prevention: For future image-driven portfolio sections, plan either a generated manifest workflow or a real backend/build step instead of relying on direct folder discovery.
 
-### 2026-06-04 - Single hardware renders need a different media treatment than galleries
-- Cause: The shared project media grid was optimized for multi-item or portrait-heavy media blocks.
-- Fix: Added a dedicated single-image project media variant with contained rendering and clipped hover zoom.
-- Prevention: Use a scoped media modifier when a project has only one wide board render instead of forcing it into a gallery-oriented layout.
+### 2026-06-04 - Generated data should be refreshed as part of verification
+- Cause: A generated manifest can become stale if new images are added but the sync step is skipped.
+- Fix: Made both verification scripts run the gallery sync first.
+- Prevention: Couple generated asset data with tests or release scripts so stale manifests are caught before publishing.
 
-### 2026-06-04 - Static content tests should also assert removed references
-- Cause: Positive presence checks alone do not catch broken legacy references that remain in HTML after asset cleanup.
-- Fix: Added negative assertions for removed `Smart Stair Light` titles and image paths.
-- Prevention: When replacing or deleting project assets, update tests to validate both what must exist and what must no longer exist.
+### 2026-06-04 - A watcher improves the editing workflow even on a static site
+- Cause: Manually running sync after every image addition is easy to forget during rapid portfolio updates.
+- Fix: Added a lightweight watcher that keeps the manifest in sync while the user is editing.
+- Prevention: When a static site depends on generated asset data, offer both a one-shot sync command and a long-running watcher for local development.
 
-### 2026-06-04 - Browser interaction tests remain valuable after non-JS content changes
-- Cause: Even mostly content-driven project updates can still break responsive layout or media rendering.
-- Fix: Extended the headless browser test to validate the new valve controller media block across multiple viewports.
-- Prevention: Keep at least one browser-level verification path for portfolio sections that mix layout, media, and interaction behavior.
+### 2026-06-04 - Single-purpose hard-coded media blocks do not scale well
+- Cause: The previous valve project card used one hard-coded image path, so every new image required manual HTML edits.
+- Fix: Replaced the static media block with a data-driven gallery container.
+- Prevention: Use data-driven rendering for project sections that are likely to receive additional media over time.

@@ -110,6 +110,35 @@ function viewProject(url) {
   }
 }
 
+const projectGalleryManifest = window.PROJECT_GALLERIES || {};
+const autoProjectGalleries = document.querySelectorAll("[data-project-gallery]");
+
+autoProjectGalleries.forEach((galleryRoot) => {
+  const projectKey = galleryRoot.dataset.projectGallery;
+  const galleryItems = projectGalleryManifest[projectKey];
+  const galleryContainer = galleryRoot.querySelector("[data-project-gallery-items]");
+
+  if (!galleryContainer || !Array.isArray(galleryItems) || galleryItems.length === 0) {
+    return;
+  }
+
+  galleryContainer.innerHTML = "";
+  galleryContainer.classList.toggle("auto-project-gallery--single", galleryItems.length === 1);
+
+  galleryItems.forEach((item) => {
+    const galleryItem = document.createElement("div");
+    galleryItem.className = "auto-project-gallery-item";
+
+    const image = document.createElement("img");
+    image.className = "auto-project-gallery-thumb";
+    image.src = item.src;
+    image.alt = item.alt;
+
+    galleryItem.appendChild(image);
+    galleryContainer.appendChild(galleryItem);
+  });
+});
+
 const thesisGalleryItems = document.querySelectorAll(".thesis-gallery-item");
 const thesisLightbox = document.querySelector(".thesis-lightbox");
 
