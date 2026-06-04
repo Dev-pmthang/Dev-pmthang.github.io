@@ -251,94 +251,44 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
       </div>
 
       <div class="project-row">
-        <div class="project-media-gallery">
-          <img src="assets/img/projects/Smart-Stair-Light-PLC/Master_PLC.jpg" alt="Smart Stair Light"
-            class="media-item">
-          <iframe class="media-item" src="https://www.youtube.com/embed/q7AKW9DuL5I" frameborder="0"
-            allowfullscreen></iframe>
+        <div class="project-media-gallery project-media-gallery--single">
+          <div class="project-media-frame">
+            <img src="assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png"
+              alt="Smart Industrial Valve Controller 4-layer PCB render" class="media-item media-item--board">
+          </div>
         </div>
         <div class="project-content">
-          <div class="project-title">Smart Stair Light System V3</div>
-          <div class="project-summary">Smart Stair Light Using Power Line Communication (5/2025 - 11/2025)</div>
+          <div class="project-title">Smart Industrial Valve Controller</div>
+          <div class="project-summary">Industrial Valve Actuation Controller (03/2025 - Present)</div>
           <div class="project-description">
-            <p>The Smart Stair Light PLC project utilizes Power Line Communication (PLC) technology to transmit data
-              directly over power lines. This approach enables independent control of individual LED steps and
-              significantly simplifies installation by requiring only a two-wire power bus for the entire system.
-            </p>
-            <p> Additionally, the system features an ESP32-hosted Web Interface, enabling Over-The-Air (OTA) firmware
-              updates. It allows users to configure RGB colors, cascade speeds, and dynamic lighting effects in
-              real-time.</p>
+            <p>Designed schematics and 4-layer PCB layouts for an industrial valve controller with AGND/DGND
+              separation, EMI/EMC-conscious routing, ESD protection, and robust 4-20 mA / 0-10 V interfaces for
+              noise-tolerant operation in factory environments. I also designed the H-Bridge motor driver stage for
+              precise stepper motor actuation, covering direction control, current handling, and protection circuitry
+              for reliable field operation.</p>
+            <p>Developed the embedded firmware on STM32 using HAL and FreeRTOS, implementing PID control, encoder
+              feedback, Kalman filtering, ADC processing, EEPROM wear-leveling, self-diagnostics, and industrial
+              communications over RS485 Modbus RTU, SPI, I2C, and UART with CRC checking. I supported end-to-end
+              testing and deployment at TS FOOD factory, including HMI/PLC configuration, valve calibration, motor
+              tuning, and operational acceptance testing, while continuing to develop V2 with enhanced monitoring and
+              control capabilities.</p>
           </div>
           <div class="tech-stack">
             <span class="tech-label">Technology & Engineering:</span>
             <div class="tags">
-              <span>ESP32</span>
-              <span>PLC Programming</span>
-              <span>Web Server</span>
+              <span>STM32</span>
+              <span>FreeRTOS</span>
+              <span>PID Control</span>
+              <span>Encoder Feedback</span>
+              <span>H-Bridge Motor Driver</span>
+              <span>Stepper Motor Control</span>
+              <span>RS485 Modbus RTU</span>
+              <span>4-20mA</span>
+              <span>0-10V</span>
+              <span>EEPROM</span>
+              <span>Kalman Filter</span>
               <span>Altium Designer</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-row">
-        <div class="project-media-gallery">
-          <img src="assets/img/projects/Smart-Stair-Light-RGB/Master_controller_top_layer.jpg" alt="Smart Stair Light"
-            class="media-item">
-          <iframe class="media-item" src="https://www.youtube.com/embed/9xn1KpapvbE" frameborder="0"
-            allowfullscreen></iframe>
-        </div>
-        <div class="project-content">
-          <div class="project-title">Smart Stair Light System V2</div>
-          <div class="project-summary">Smart Stair Light WS2811 (4/2025 - 7/2025)</div>
-          <div class="project-description">
-            <p>The Smart Stair Light WS2811 project leverages the single-wire communication protocol of the WS2811 LED
-              Driver. I designed individual slave modules for each stair step based on the WS2811 IC, which receives
-              control signals from the Master unit. This architecture utilizes a daisy-chain topology, requiring only
-              three wires (Power, Ground, and Data) to connect sequentially from one step to the next, significantly
-              simplifying the wiring process
-            </p>
-            <p>Additionally, the system features an ESP32-hosted Web Interface, enabling Over-The-Air (OTA) firmware
-              updates. It allows users to configure RGB colors, cascade speeds, and dynamic lighting effects in
-              real-time</p>
-          </div>
-          <div class="tech-stack">
-            <span class="tech-label">Technology & Engineering:</span>
-            <div class="tags">
-              <span>ESP32</span>
-              <span>WS2811</span>
-              <span>Web Server</span>
-              <span>Altium Designer</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-row">
-        <div class="project-media-gallery">
-          <img src="assets/img/projects/Smart-Stair-Light-25Step/SmartStairLight_25steps_Kathode.png"
-            alt="Smart Stair Light" class="media-item">
-          <iframe class="media-item" src="https://www.youtube.com/embed/nNyI7j526cc" frameborder="0"
-            allowfullscreen></iframe>
-        </div>
-        <div class="project-content">
-          <div class="project-title">Smart Stair Light System V1</div>
-          <div class="project-summary">Smart Stair Light 25 Steps Kathode (9/2024 - 3/2025)</div>
-          <div class="project-description">
-            <p> The Smart Stair Light project utilizes 74HC595 shift register ICs for output expansion, enabling
-              parallel control of multiple LED steps. This system effectively addresses the need for automated lighting
-              solutions in modern smart homes.
-            </p>
-            <p> Additionally, the system features an ESP8266-hosted Web Interface, enabling Over-The-Air (OTA)
-              firmware updates, cascade speeds, and lighting effects in real-time.</p>
-          </div>
-          <div class="tech-stack">
-            <span class="tech-label">Technology & Engineering:</span>
-            <div class="tags">
-              <span>ESP8266</span>
-              <span>74HC595</span>
-              <span>Web Server</span>
-              <span>Altium Designer</span>
+              <span>EMI/EMC PCB Design</span>
             </div>
           </div>
         </div>

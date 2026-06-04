@@ -18,6 +18,7 @@ const thesisImages = [
   "Full_Board.jpg",
   "Board_Altium.JPG"
 ];
+const valveImage = "HP_Valves_Slave.png";
 
 const viewportCases = [
   { name: "desktop", width: 1366, height: 1100, mobile: false, expectedFlex: "row", expectedColumns: 2 },
@@ -384,9 +385,14 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
     `(() => {
       const gallery = document.querySelector(".thesis-gallery");
       const items = document.querySelectorAll(".thesis-gallery-item");
+      const valveProjectImage = document.querySelector('img[src*="Smart-Industrial-Valve-Controller/${valveImage}"]');
       const thumbsReady = Array.from(document.querySelectorAll(".thesis-gallery-thumb"))
         .every((img) => img.complete && img.naturalWidth > 0 && img.naturalHeight > 0);
-      return Boolean(gallery) && items.length === 5 && thumbsReady;
+      const valveReady = Boolean(valveProjectImage)
+        && valveProjectImage.complete
+        && valveProjectImage.naturalWidth > 0
+        && valveProjectImage.naturalHeight > 0;
+      return Boolean(gallery) && items.length === 5 && thumbsReady && valveReady;
     })()`
   );
 
@@ -397,13 +403,19 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
       const gallery = document.querySelector(".thesis-gallery");
       const lightbox = document.querySelector(".thesis-lightbox");
       const galleryItems = Array.from(document.querySelectorAll(".thesis-gallery-item"));
+      const valveProjectImage = document.querySelector('img[src*="Smart-Industrial-Valve-Controller/${valveImage}"]');
+      const valveGallery = valveProjectImage?.closest(".project-media-gallery--single");
+      const valveRow = valveProjectImage?.closest(".project-row");
 
       return {
         thesisRowExists: Boolean(thesisRow),
         galleryExists: Boolean(gallery),
         lightboxExists: Boolean(lightbox),
+        valveRowExists: Boolean(valveRow),
+        valveGalleryExists: Boolean(valveGallery),
         itemCount: galleryItems.length,
         flexDirection: thesisRow ? getComputedStyle(thesisRow).flexDirection : null,
+        valveFlexDirection: valveRow ? getComputedStyle(valveRow).flexDirection : null,
         columnCount: gallery
           ? getComputedStyle(gallery).gridTemplateColumns.split(" ").filter(Boolean).length
           : 0,
@@ -416,6 +428,24 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
         galleryNoOverflow: gallery
           ? gallery.scrollWidth <= gallery.clientWidth + 2
           : false,
+        valveRowFitsViewport: valveRow
+          ? valveRow.getBoundingClientRect().right <= window.innerWidth + 2
+          : false,
+        valveRowNoOverflow: valveRow
+          ? valveRow.scrollWidth <= valveRow.clientWidth + 2
+          : false,
+        valveGalleryNoOverflow: valveGallery
+          ? valveGallery.scrollWidth <= valveGallery.clientWidth + 2
+          : false,
+        valveImageState: valveProjectImage
+          ? {
+              width: valveProjectImage.clientWidth,
+              height: valveProjectImage.clientHeight,
+              objectFit: getComputedStyle(valveProjectImage).objectFit,
+              transition: getComputedStyle(valveProjectImage).transitionProperty,
+              containerOverflow: valveGallery ? getComputedStyle(valveGallery.querySelector(".project-media-frame")).overflow : ""
+            }
+          : null,
         thumbs: galleryItems.map((item) => {
           const image = item.querySelector("img");
           return {
@@ -435,13 +465,24 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
   assert(initialState.thesisRowExists, `${viewport.name}: thesis project row exists.`);
   assert(initialState.galleryExists, `${viewport.name}: thesis gallery exists.`);
   assert(initialState.lightboxExists, `${viewport.name}: thesis lightbox exists.`);
+  assert(initialState.valveRowExists, `${viewport.name}: valve controller project row exists.`);
+  assert(initialState.valveGalleryExists, `${viewport.name}: valve controller media block exists.`);
   assert(initialState.itemCount === thesisImages.length, `${viewport.name}: thesis gallery renders ${thesisImages.length} images.`);
   assert(initialState.flexDirection === viewport.expectedFlex, `${viewport.name}: .project-row keeps expected flex direction ${viewport.expectedFlex}.`);
+  assert(initialState.valveFlexDirection === viewport.expectedFlex, `${viewport.name}: valve project row keeps expected flex direction ${viewport.expectedFlex}.`);
   assert(initialState.columnCount === viewport.expectedColumns, `${viewport.name}: thesis gallery uses ${viewport.expectedColumns} column(s).`);
   assert(initialState.thesisRowFitsViewport, `${viewport.name}: thesis project row fits inside the viewport.`);
   assert(initialState.thesisRowNoOverflow, `${viewport.name}: thesis project row has no internal horizontal overflow.`);
   assert(initialState.galleryNoOverflow, `${viewport.name}: thesis gallery has no internal horizontal overflow.`);
+  assert(initialState.valveRowFitsViewport, `${viewport.name}: valve project row fits inside the viewport.`);
+  assert(initialState.valveRowNoOverflow, `${viewport.name}: valve project row has no internal horizontal overflow.`);
+  assert(initialState.valveGalleryNoOverflow, `${viewport.name}: valve project media block has no internal horizontal overflow.`);
   assert(!initialState.lightboxOpen, `${viewport.name}: lightbox starts closed.`);
+  assert(initialState.valveImageState !== null, `${viewport.name}: valve project image state is available.`);
+  assert(initialState.valveImageState.width > 0 && initialState.valveImageState.height > 0, `${viewport.name}: valve project image renders with visible dimensions.`);
+  assert(initialState.valveImageState.objectFit === "contain", `${viewport.name}: valve project image uses object-fit contain.`);
+  assert(initialState.valveImageState.transition.includes("transform"), `${viewport.name}: valve project image keeps smooth transform transition.`);
+  assert(initialState.valveImageState.containerOverflow === "hidden", `${viewport.name}: valve project hover zoom stays clipped inside its frame.`);
 
   initialState.thumbs.forEach((thumb, index) => {
     assert(thumb.width > 0 && thumb.height > 0, `${viewport.name}: thesis image ${index + 1} renders with visible dimensions.`);
@@ -576,7 +617,7 @@ async function main() {
       screenshots.push({ viewport: viewport.name, path: screenshotPath });
     }
 
-    console.log("PASS: Thesis gallery lightbox and responsive layout checks passed.");
+    console.log("PASS: Project showcase layout and thesis lightbox checks passed.");
     for (const screenshot of screenshots) {
       console.log(`SCREENSHOT ${screenshot.viewport}: ${screenshot.path}`);
     }

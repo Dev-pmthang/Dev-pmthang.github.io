@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 09:54:28 +07:00
-- Scope: Add a responsive multi-image gallery and lightbox for the Graduation Thesis project without affecting the rest of the portfolio site.
+- Timestamp: 2026-06-04 10:11:48 +07:00
+- Scope: Realign the `Projects` section with the project media currently present in `assets/img/projects`, add `Smart Industrial Valve Controller`, and keep the thesis gallery behavior intact.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -12,70 +12,60 @@
 - Primary assets: `assets/img/*`, `assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf`
 
 ## Completed
-- Audited the current `projects` markup, thesis asset folder, active stylesheet, and behavior script before editing.
-- Kept the existing portfolio layout and scoped all new UI behavior to the Graduation Thesis project only.
-- Replaced the thesis single-image presentation with a dedicated five-image gallery using local assets from `assets/img/projects/Graduation-thesis`.
-- Added thesis-only hover zoom behavior with clipped overflow, rounded cards, and responsive grid behavior for desktop, tablet, and mobile.
-- Added a thesis-only lightbox modal with close button, overlay click-to-close, and `Esc` key support.
-- Preserved image proportions by keeping thumbnail crops inside card containers and using `object-fit: contain` in the lightbox preview.
-- Added thesis-specific verification coverage in `tests/verify-portfolio-projects.ps1`.
-- Added a headless browser interaction test in `tests/verify-thesis-gallery.mjs` and a PowerShell wrapper in `tests/verify-thesis-gallery.ps1`.
-- Replaced the earlier iframe-based harness approach with a Chrome DevTools Protocol test runner because the iframe dump-dom method was not reliable for modal interaction checks.
-- Captured headless QA screenshots during thesis gallery verification for desktop, tablet, and mobile viewports.
-- Cleaned `assets/js/script.js` comments to readable ASCII English while preserving existing logic.
-- Executed all verification scripts successfully after the final code update.
+- Audited the current `Projects` markup and the real contents of `assets/img/projects` before editing.
+- Confirmed the project media folder now contains only `Graduation-thesis` and `Smart-Industrial-Valve-Controller`.
+- Confirmed the old `Smart Stair Light` project image references in `index.html` pointed to assets that are already deleted from the working tree.
+- Kept the `Forklift Battery Protection Controller` as the newest text-only project entry.
+- Added `Smart Industrial Valve Controller` as a new project row with its local image `assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png`.
+- Wrote new portfolio copy for `Smart Industrial Valve Controller`, emphasizing 4-layer PCB design, industrial 4-20 mA / 0-10 V interfaces, the H-Bridge motor driver, STM32 + FreeRTOS firmware, closed-loop control, field deployment, and ongoing V2 development.
+- Removed the outdated `Smart Stair Light` project blocks from `index.html` so the page no longer references missing project assets.
+- Added a scoped single-image media style for board-render style projects without affecting the thesis gallery or other shared project styles.
+- Preserved the existing `Graduation Thesis` multi-image gallery and lightbox behavior.
+- Extended the static verification script to assert the new valve project content and to ensure removed `Smart Stair Light` references are no longer present.
+- Extended the headless browser verification script to confirm the valve project media block renders correctly across desktop, tablet, and mobile while the thesis lightbox still works.
+- Executed both verification scripts successfully after the final edits.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- Add real project media for the Forklift Battery Protection Controller entry when assets are available.
+- Add real project media for the `Forklift Battery Protection Controller` entry when assets are available.
 - Run a live in-app browser QA pass if the `iab` backend becomes available again.
-- Review and normalize older mojibake comments or text fragments in legacy source sections if they become visible in the editor or browser.
-- Decide whether older unused thesis images should remain in `assets/img/projects/Graduation-thesis` long-term.
-- Add broader site-wide responsive checks later if you plan a full UI refresh beyond the thesis section.
+- Review and normalize older mojibake text fragments in legacy sections if they become visible in the editor or browser.
+- Decide whether the remaining non-project asset deletions in the workspace should be kept permanently if they are no longer needed.
+- Consider adding a dedicated local image preview/lightbox for future single-image project cards if more hardware render projects are added.
 
 ## Technical And Design Decisions
-- Keep `assets/css/style-orange-red.css` as the current design-system source of truth.
-- Keep the thesis gallery isolated with dedicated classes such as `thesis-gallery`, `thesis-gallery-item`, and `thesis-lightbox` to avoid regressions in other projects.
-- Preserve the existing `.project-row` structure and add a thesis-specific media modifier instead of refactoring shared project gallery rules.
-- Use semantic `<button>` elements for gallery items so click, focus, and keyboard activation work naturally without extra libraries.
-- Keep the lightbox implementation in vanilla JavaScript because the site has no build step and the interaction is simple enough to stay dependency-free.
-- Prefer direct browser automation through Chrome DevTools Protocol for future static-site UI interaction tests when the built-in browser backend is unavailable.
+- Treat the actual contents of `assets/img/projects` as the source of truth for which image-backed project entries should remain in the portfolio.
+- Keep `Forklift Battery Protection Controller` because it is a valid active project entry even without a media folder yet.
+- Remove stale project blocks that referenced deleted local assets instead of leaving broken images in the portfolio.
+- Add a dedicated `.project-media-gallery--single` variant so single hardware renders can use `object-fit: contain` without affecting the thesis gallery grid.
+- Keep the thesis lightbox implementation unchanged because its scope and behavior are already isolated and verified.
+- Keep the new valve controller copy concise and end-to-end, with explicit emphasis on the H-Bridge motor driver, industrial communication, and deployment work.
 
 ## Risks And Notes For Next Session
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so final visual verification relied on headless Chrome instead of the in-app browser.
+- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so visual verification again relied on headless Chrome instead of the in-app browser.
+- The project list is now aligned with the currently available project media folders, but additional project assets can be reintroduced later if you restore them intentionally.
+- Some terminal output still shows mojibake, which still looks like a console encoding issue rather than a confirmed HTML/CSS corruption issue.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
-- Some terminal output still shows mojibake, which suggests a console encoding mismatch rather than a confirmed source-file corruption issue.
-- Thesis interaction coverage is now automated, but unrelated site-wide responsive issues outside the thesis scope should be validated separately if you touch broader layout code later.
 
 ## Lessons Learned
-### 2026-06-04 - Git checkpoint workflow could not be applied initially
-- Cause: The working directory was not yet a git repository.
-- Fix: Initialized git before continuing feature work.
-- Prevention: Verify `git status` works at the start of every session before promising checkpoint commits.
+### 2026-06-04 - The media folder should drive image-backed project entries
+- Cause: The HTML still referenced older `Smart Stair Light` assets even after those local files had been deleted.
+- Fix: Realigned the `Projects` section with the directories that actually exist in `assets/img/projects`.
+- Prevention: Before editing project cards, inspect the real media folders and remove any stale references to deleted assets.
 
-### 2026-06-04 - Active styling source could be misidentified
-- Cause: Multiple CSS files exist, but the real entry point loads `assets/css/style-orange-red.css`.
-- Fix: Confirmed the linked stylesheet from `index.html` before editing styles.
-- Prevention: Always inspect the entry document and active asset references before changing UI code.
+### 2026-06-04 - Single hardware renders need a different media treatment than galleries
+- Cause: The shared project media grid was optimized for multi-item or portrait-heavy media blocks.
+- Fix: Added a dedicated single-image project media variant with contained rendering and clipped hover zoom.
+- Prevention: Use a scoped media modifier when a project has only one wide board render instead of forcing it into a gallery-oriented layout.
 
-### 2026-06-04 - Content verification for HTML should not depend on line wrapping
-- Cause: Multiline HTML paragraphs can break exact string matches in simple static tests.
-- Fix: Normalized whitespace in verification scripts before checking required snippets.
-- Prevention: Use whitespace-tolerant assertions for static HTML validation from the start.
+### 2026-06-04 - Static content tests should also assert removed references
+- Cause: Positive presence checks alone do not catch broken legacy references that remain in HTML after asset cleanup.
+- Fix: Added negative assertions for removed `Smart Stair Light` titles and image paths.
+- Prevention: When replacing or deleting project assets, update tests to validate both what must exist and what must no longer exist.
 
-### 2026-06-04 - Media galleries need project-specific aspect ratios
-- Cause: The shared media rules were tuned for portrait-heavy project content and would crop wider hardware images too aggressively.
-- Fix: Added a thesis-specific gallery modifier with mixed hero, portrait, and wide thumbnail ratios.
-- Prevention: Inspect image shapes before reusing a shared gallery layout and add scoped modifiers when a project has different media proportions.
-
-### 2026-06-04 - Thesis media and thesis narrative must stay aligned
-- Cause: The original thesis copy and the newly supplied images described different systems.
-- Fix: Rewrote the thesis title, summary, description, tags, and media references together.
-- Prevention: Treat project text and project media as one content unit during portfolio updates.
-
-### 2026-06-04 - Iframe dump-dom browser checks were not reliable for modal testing
-- Cause: The first headless verification approach relied on an iframe harness and dump-dom timing, which was inconsistent for lightbox interactions across viewports.
-- Fix: Replaced it with a direct Chrome DevTools Protocol runner that drives the real page and checks UI state after each interaction.
-- Prevention: For future UI interaction tests on this static site, prefer direct browser automation over iframe-based DOM dumps when behavior matters.
+### 2026-06-04 - Browser interaction tests remain valuable after non-JS content changes
+- Cause: Even mostly content-driven project updates can still break responsive layout or media rendering.
+- Fix: Extended the headless browser test to validate the new valve controller media block across multiple viewports.
+- Prevention: Keep at least one browser-level verification path for portfolio sections that mix layout, media, and interaction behavior.

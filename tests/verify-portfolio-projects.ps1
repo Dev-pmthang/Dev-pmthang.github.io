@@ -10,6 +10,11 @@ $normalizedJs = ($jsContent -replace "\s+", " ").Trim()
 $requiredHtmlSnippets = @(
   "Forklift Battery Protection Controller",
   "Industrial Lithium Battery Protection Controller (04/2026 - Present)",
+  "Smart Industrial Valve Controller",
+  "Industrial Valve Actuation Controller (03/2025 - Present)",
+  "I also designed the H-Bridge motor driver stage for precise stepper motor actuation",
+  "testing and deployment at TS FOOD factory",
+  "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
   "Application of LoRa Mesh Network in Environmental Monitoring",
   "Graduation Thesis | Embedded Hardware & Firmware Engineer (01/2024 - 05/2024)",
   "a LoRa Mesh routing algorithm for stable long-range communication",
@@ -34,6 +39,9 @@ foreach ($snippet in $requiredHtmlSnippets) {
 }
 
 $requiredCssSnippets = @(
+  ".project-media-gallery--single",
+  ".project-media-frame",
+  ".project-media-gallery--single .media-item",
   ".thesis-gallery-item",
   ".thesis-gallery-item:hover .thesis-gallery-thumb",
   ".thesis-lightbox",
@@ -66,12 +74,33 @@ foreach ($snippet in $requiredJsSnippets) {
   }
 }
 
+$removedHtmlSnippets = @(
+  "Smart Stair Light System V3",
+  "Smart Stair Light System V2",
+  "Smart Stair Light System V1",
+  "assets/img/projects/Smart-Stair-Light-PLC/Master_PLC.jpg",
+  "assets/img/projects/Smart-Stair-Light-RGB/Master_controller_top_layer.jpg",
+  "assets/img/projects/Smart-Stair-Light-25Step/SmartStairLight_25steps_Kathode.png"
+)
+
+foreach ($snippet in $removedHtmlSnippets) {
+  if ($normalizedHtml.Contains($snippet)) {
+    throw "Found removed HTML snippet that should no longer be referenced: $snippet"
+  }
+}
+
+$projectRowCount = ([regex]::Matches($htmlContent, '<div class="project-row">')).Count
+if ($projectRowCount -ne 3) {
+  throw "Expected 3 project rows but found $projectRowCount"
+}
+
 $galleryItemCount = ([regex]::Matches($htmlContent, 'class="thesis-gallery-item\b')).Count
 if ($galleryItemCount -ne 5) {
   throw "Expected 5 thesis gallery items but found $galleryItemCount"
 }
 
 $requiredFiles = @(
+  "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
   "assets/img/projects/Graduation-thesis/Master.jpg",
   "assets/img/projects/Graduation-thesis/Node.jpg",
   "assets/img/projects/Graduation-thesis/Bo_tri.jpg",
@@ -85,4 +114,4 @@ foreach ($file in $requiredFiles) {
   }
 }
 
-Write-Host "PASS: Portfolio project content and Graduation Thesis gallery markup are present."
+Write-Host "PASS: Portfolio project content, active media references, and thesis gallery markup are present."
