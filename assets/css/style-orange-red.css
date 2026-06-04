@@ -741,6 +741,15 @@ section {
   transition: transform 0.3s;
 }
 
+.project-media-gallery--thesis .media-item {
+  aspect-ratio: 4 / 3;
+}
+
+.project-media-gallery--thesis .media-item--hero {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+
 /* --- NỘI DUNG (BÊN PHẢI) --- */
 .project-content {
   padding: 40px 50px;
@@ -839,6 +848,10 @@ section {
 
   .project-title {
     font-size: 2.5rem;
+  }
+
+  .project-media-gallery--thesis .media-item--hero {
+    grid-column: auto;
   }
 }
 
