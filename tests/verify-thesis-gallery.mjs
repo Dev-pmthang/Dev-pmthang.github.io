@@ -28,6 +28,11 @@ const valveImages = [
   "HP_Valves_Slave.png",
   "HP_Valves_Slave_BOT.png"
 ];
+const nrfImages = [
+  "Board.jpg",
+  "NRF.png",
+  "NRF_BOT.png"
+];
 
 const viewportCases = [
   { name: "desktop", width: 1366, height: 1100, mobile: false, expectedFlex: "row", expectedColumns: 2 },
@@ -358,12 +363,14 @@ async function waitForExpression(cdp, expression, timeoutMs = 10000) {
   throw new Error(`Timed out waiting for browser condition: ${expression}`);
 }
 
-async function captureThesisScreenshot(cdp, screenshotPath) {
+async function captureProjectScreenshot(cdp, screenshotPath) {
   await evaluateJson(
     cdp,
     `(() => {
+      const navigationRow = document.querySelector('[data-project-gallery="NRF"]')?.closest(".project-row");
       const thesisRow = document.querySelector(".project-media-gallery--thesis")?.closest(".project-row");
-      thesisRow?.scrollIntoView({ block: "center", behavior: "instant" });
+      const targetRow = navigationRow ?? thesisRow;
+      targetRow?.scrollIntoView({ block: "center", behavior: "instant" });
       return true;
     })()`
   );
@@ -405,6 +412,7 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
       const bmsProjectImages = getProjectImages("BMS");
       const forkliftProjectImages = getProjectImages("Forklift-Battery-Protection-Controller");
       const valveProjectImages = getProjectImages("Smart-Industrial-Valve-Controller");
+      const nrfProjectImages = getProjectImages("NRF");
       const thumbsReady = Array.from(document.querySelectorAll(".thesis-gallery-thumb"))
         .every((img) => img.complete && img.naturalWidth > 0 && img.naturalHeight > 0);
       return Boolean(gallery)
@@ -412,7 +420,8 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
         && thumbsReady
         && autoGalleryReady(bmsProjectImages, ${JSON.stringify(bmsImages)})
         && autoGalleryReady(forkliftProjectImages, ${JSON.stringify(forkliftImages)})
-        && autoGalleryReady(valveProjectImages, ${JSON.stringify(valveImages)});
+        && autoGalleryReady(valveProjectImages, ${JSON.stringify(valveImages)})
+        && autoGalleryReady(nrfProjectImages, ${JSON.stringify(nrfImages)});
     })()`
   );
 
@@ -457,7 +466,8 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
         autoProjects: {
           bms: getAutoProjectState("BMS"),
           forklift: getAutoProjectState("Forklift-Battery-Protection-Controller"),
-          valve: getAutoProjectState("Smart-Industrial-Valve-Controller")
+          valve: getAutoProjectState("Smart-Industrial-Valve-Controller"),
+          nrf: getAutoProjectState("NRF")
         },
         itemCount: galleryItems.length,
         flexDirection: thesisRow ? getComputedStyle(thesisRow).flexDirection : null,
@@ -515,6 +525,11 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
       key: "valve",
       label: "valve controller",
       expectedImages: valveImages
+    },
+    {
+      key: "nrf",
+      label: "vehicle navigation display",
+      expectedImages: nrfImages
     }
   ].forEach((project) => {
     const state = initialState.autoProjects[project.key];
@@ -615,8 +630,8 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
     assert(!closedState.bodyLocked, `${viewport.name}: body scroll unlocks after closing image ${index + 1}.`);
   }
 
-  const screenshotPath = path.join(screenshotDir, `thesis-gallery-${viewport.name}.png`);
-  await captureThesisScreenshot(cdp, screenshotPath);
+  const screenshotPath = path.join(screenshotDir, `project-showcase-${viewport.name}.png`);
+  await captureProjectScreenshot(cdp, screenshotPath);
 
   return screenshotPath;
 }

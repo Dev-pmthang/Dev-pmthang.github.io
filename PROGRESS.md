@@ -1,8 +1,8 @@
 # PROGRESS
 
 ## Session
-- Timestamp: 2026-06-04 13:11:49 +07:00
-- Scope: Rebalance the `Contact` section so the left sidebar and right form column feel cleaner, lighter, and more proportional while keeping the same overall structure and responsive behavior.
+- Timestamp: 2026-06-05 14:06:19 +07:00
+- Scope: Add a new `Vehicle Navigation Display` entry to the `Projects` section using the existing auto-gallery project card pattern, keep the current layout/styles untouched, and verify the new row across desktop, tablet, and mobile.
 
 ## Current Project Snapshot
 - Project type: Static single-page portfolio site.
@@ -12,43 +12,40 @@
 - Generated gallery manifest: `assets/data/project-galleries.js`
 - Gallery sync scripts: `scripts/sync-project-galleries.mjs`, `scripts/sync-project-galleries.ps1`
 - Gallery watch scripts: `scripts/watch-project-galleries.mjs`, `scripts/watch-project-galleries.ps1`
-- Active image-backed project folders: `BMS`, `Forklift-Battery-Protection-Controller`, `Graduation-thesis`, `Smart-Industrial-Valve-Controller`
+- Active image-backed project folders: `BMS`, `Forklift-Battery-Protection-Controller`, `Graduation-thesis`, `NRF`, `Smart-Industrial-Valve-Controller`
 - Contact image folder: `assets/img/Contact`
 
 ## Completed
-- Re-audited the current contact markup and the new contact-only CSS block before refining the layout further.
-- Created a new checkpoint commit before tuning the visual balance of the contact section.
-- Reduced the visual weight of the left sidebar by tightening card padding, shrinking the QR presentation, and reducing internal gaps.
-- Adjusted the desktop grid ratio to a clearer left/right balance closer to the intended 40-45% / 55-60% split.
-- Changed the contact grid to stretch the right form shell vertically on desktop so the form column reads as a balanced counterpart to the stacked left cards.
-- Tightened typography, badge sizing, highlight-card spacing, input padding, textarea height, and submit button styling to make the contact area feel denser and more intentional.
-- Kept the existing HTML structure and form functionality intact; the rebalancing work was handled almost entirely through scoped CSS updates.
-- Strengthened the contact verification script to assert desktop sidebar width ratio, QR visual footprint, and form-height balance in addition to the existing responsive checks.
-- Verified the updated contact layout in headless Chrome and reviewed the generated desktop screenshot for visual QA.
-- Re-ran the existing project showcase and thesis regression tests successfully after the contact rebalance.
+- Re-audited the `Projects` markup, gallery manifest flow, and responsive CSS before editing the project list.
+- Created a checkpoint commit before modifying the project showcase.
+- Added a new `Vehicle Navigation Display` project row in `index.html` using the existing `project-row` and auto-gallery structure.
+- Kept the current classes, layout, spacing, and project card visual system unchanged so the new entry inherits the same styling.
+- Connected the new project to the existing manifest-driven gallery workflow through the `NRF` project folder in `assets/img/projects/NRF/`.
+- Updated the project regression checks so the new card, manifest entries, and NRF image assets are covered automatically.
+- Updated the browser-based showcase verification to include the new NRF gallery and to capture screenshots centered on the new project row for responsive QA.
+- Synced the generated project gallery manifest so it now includes five image-backed project folders and twelve total project images.
+- Passed `tests/verify-portfolio-projects.ps1` after the new project was added.
+- Passed `tests/verify-thesis-gallery.ps1`, confirming the new project row fits correctly on desktop, tablet, and mobile with non-distorted gallery images.
+- Reviewed the generated desktop, tablet, and mobile screenshots for the new project row to confirm spacing and visual consistency with the existing portfolio style.
 
 ## In Progress
 - No active implementation task in this session.
 
 ## TODO
-- If you rename the Zalo QR asset later, update the `src` in `index.html` to match the new filename or path.
-- Consider adding direct contact metadata later, such as a clickable Zalo ID, email card, or phone card, if you want the left column to carry more than the QR entry point.
-- Consider adding a second CTA below the form, such as `Download CV` or `Schedule a Call`, if you want to use the remaining vertical space in the form shell on larger screens.
-- Consider adding a generic lightbox for auto-rendered project galleries if you want click-to-preview behavior for BMS, forklift, and valve images too.
-- Run a live in-app browser QA pass if the `iab` backend becomes available again.
-- Review and normalize older mojibake text fragments in legacy sections if they become visible in the browser.
+- If you rename or replace any image inside `assets/img/projects/NRF/`, rerun `scripts/sync-project-galleries.ps1` so the generated gallery manifest stays in sync.
+- Consider adding a lightbox interaction for auto-rendered project galleries later if you want the NRF, BMS, forklift, and valve images to support click-to-preview behavior too.
+- Review and normalize older mojibake text fragments in legacy CSS comments or content if they become visible in future UI passes.
 
 ## Technical And Design Decisions
-- Limited the rebalance to scoped contact selectors so no project, footer, or thesis-lightbox layout behavior changed.
-- Preserved the actual asset path `assets/img/Contact/Zalo.jpg` and kept the contact section structure stable, using CSS as the primary tool for visual rebalancing.
-- Used a stretched desktop grid with a smaller left-column ratio instead of inventing a new markup pattern, because the imbalance was caused mainly by proportion and spacing rather than DOM structure.
-- Reduced QR dominance by constraining the QR shell and QR image width rather than removing content from the Zalo card.
-- Strengthened the browser verification script so the intended design targets are measurable instead of relying only on subjective inspection.
+- Limited the implementation to the `Projects` section and its gallery verification flow so no other portfolio sections were altered.
+- Reused the existing manifest-driven auto-gallery component rather than inventing a new gallery pattern, keeping the new project visually consistent with the current cards.
+- Left the CSS selectors and spacing rules untouched because the current `project-row` system already handles desktop, tablet, and mobile breakpoints correctly for auto galleries.
+- Used the existing `NRF` asset folder as the gallery source so the browser receives the same multi-image behavior already used by other image-backed projects.
 
 ## Risks And Notes For Next Session
-- The Browser plugin backend is still unavailable for this workspace (`Browser is not available: iab`), so responsive verification for the contact section still relies on headless Chrome screenshots and computed-style checks.
-- The contact section now depends on the presence of `assets/img/Contact/Zalo.jpg`; if that asset is moved or renamed, the QR card will need its `src` updated.
-- The generated manifest still covers four project folders and nine images in total.
+- Responsive verification for the projects section still depends on local headless Chromium checks and captured screenshots rather than the unavailable in-app browser backend.
+- The generated manifest now depends on the presence of the three NRF images: `Board.jpg`, `NRF.png`, and `NRF_BOT.png`.
+- The generated manifest now covers five project folders and twelve images in total.
 - The portfolio still depends on CDN-hosted fonts/icons and a live Formspree endpoint.
 
 ## Lessons Learned

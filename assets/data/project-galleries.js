@@ -33,6 +33,20 @@ window.PROJECT_GALLERIES = {
       "alt": "Graduation Thesis - Node"
     }
   ],
+  "NRF": [
+    {
+      "src": "assets/img/projects/NRF/Board.jpg",
+      "alt": "NRF - Board"
+    },
+    {
+      "src": "assets/img/projects/NRF/NRF.png",
+      "alt": "NRF"
+    },
+    {
+      "src": "assets/img/projects/NRF/NRF_BOT.png",
+      "alt": "NRF - NRF BOT"
+    }
+  ],
   "Smart-Industrial-Valve-Controller": [
     {
       "src": "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",

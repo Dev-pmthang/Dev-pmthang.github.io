@@ -66,6 +66,12 @@ $requiredHtmlSnippets = @(
   "I also designed the H-Bridge motor driver stage for precise stepper motor actuation",
   "testing and deployment at TS FOOD factory",
   'data-project-gallery="Smart-Industrial-Valve-Controller"',
+  "Vehicle Navigation Display",
+  "Low-Power Vehicle Navigation Display with QSPI High-Brightness Screen",
+  "This project is a compact navigation display system designed for vehicle applications.",
+  "The system uses an nRF52840 microcontroller and a high-resolution QSPI display with high brightness",
+  'data-project-gallery="NRF"',
+  "assets/img/projects/NRF/Board.jpg",
   'data-project-gallery-items',
   "assets/data/project-galleries.js",
   "Application of LoRa Mesh Network in Environmental Monitoring",
@@ -141,7 +147,11 @@ $requiredManifestSnippets = @(
   '"assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png"',
   '"Smart-Industrial-Valve-Controller"',
   '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png"',
-  '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png"'
+  '"assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png"',
+  '"NRF"',
+  '"assets/img/projects/NRF/Board.jpg"',
+  '"assets/img/projects/NRF/NRF.png"',
+  '"assets/img/projects/NRF/NRF_BOT.png"'
 )
 
 foreach ($snippet in $requiredManifestSnippets) {
@@ -166,8 +176,8 @@ foreach ($snippet in $removedHtmlSnippets) {
 }
 
 $projectRowCount = ([regex]::Matches($htmlContent, '<div class="project-row">')).Count
-if ($projectRowCount -ne 4) {
-  throw "Expected 4 project rows but found $projectRowCount"
+if ($projectRowCount -ne 5) {
+  throw "Expected 5 project rows but found $projectRowCount"
 }
 
 $galleryItemCount = ([regex]::Matches($htmlContent, 'class="thesis-gallery-item\b')).Count
@@ -181,6 +191,9 @@ $requiredFiles = @(
   "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
   "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave_BOT.png",
+  "assets/img/projects/NRF/Board.jpg",
+  "assets/img/projects/NRF/NRF.png",
+  "assets/img/projects/NRF/NRF_BOT.png",
   "assets/img/projects/Graduation-thesis/Master.jpg",
   "assets/img/projects/Graduation-thesis/Node.jpg",
   "assets/img/projects/Graduation-thesis/Bo_tri.jpg",
