@@ -5,7 +5,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MINH THANG Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style-orange-red.css" />
+  <!-- Base portfolio layout and component styles -->
+  <link rel="stylesheet" href="assets/css/style-orange-red.css?v=20260606-1" />
+  <!-- Hero/avatar HUD overrides loaded after the base stylesheet -->
+  <link rel="stylesheet" href="assets/css/style-orange-red-hud.css?v=20260606-16" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -30,36 +33,94 @@
 
   <section class="home" id="home">
     <div class="home-content">
-      <h1>Hi, It's <span>MINH THANG</span></h1>
-<h3>I'm an <span>EMBEDDED SYSTEMS ENGINEER</span></h3>
-
-<p>🧑‍💻 About Me</p>
-<p>🎓 Background: Computer Engineering</p>
-<p>🔭 Currently designing and developing embedded systems from schematic, PCB layout to firmware implementation and real-world deployment.</p>
-<p>🌱 Interests: Embedded Systems, IoT, Industrial Automation, Real-Time Communication, and Hardware Optimization.</p>
-<p>🎯 Goal: Become an Embedded/Hardware Architect and build reliable, scalable, and high-performance electronic products.</p>
-<p>⚡ Expertise: STM32, ESP32, FreeRTOS, PCB Design, CAN Bus, RS485/Modbus, LoRa, MQTT, C/C++, Hardware Debugging, and System Integration.</p>
-      <div class="social-icons">
-        <a href="https://github.com/Dev-pmthang" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://www.facebook.com/minhthang66" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-facebook"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/devmt0811/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
+      <div class="hero-copy">
+        <div class="hero-badge">
+          <i class="fa-solid fa-microchip"></i>
+          <span>Embedded Systems Engineer</span>
+        </div>
+        <h1>Hi, It's <span class="hero-name-nowrap">MINH&nbsp;THANG</span></h1>
+        <h3>I'm an <strong class="hero-role-nowrap"><span>EMBEDDED&nbsp;SYSTEMS</span>&nbsp;ENGINEER</strong></h3>
       </div>
-      <div class="btn-group">
-        <a href="assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf" class="btn" target="_blank">
-          CV
-        </a>
-        <a href="#contact" class="btn">Contact</a>
+      <div class="hero-panel">
+        <div class="home-facts">
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-user-gear"></i>
+            </div>
+            <p>About Me</p>
+          </div>
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <p><span class="home-fact-label">Background:</span> Computer Engineering</p>
+          </div>
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-microchip"></i>
+            </div>
+            <p>Currently designing and developing embedded systems from schematic, PCB layout to firmware implementation and real-world deployment.</p>
+          </div>
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-satellite-dish"></i>
+            </div>
+            <p><span class="home-fact-label">Interests:</span> Embedded Systems, IoT, Industrial Automation, Real-Time Communication, and Hardware Optimization.</p>
+          </div>
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <p><span class="home-fact-label">Goal:</span> Become an Embedded/Hardware Architect and build reliable, scalable, and high-performance electronic products.</p>
+          </div>
+          <div class="home-fact">
+            <div class="home-fact-icon">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <p><span class="home-fact-label">Expertise:</span> STM32, ESP32, FreeRTOS, PCB Design, CAN Bus, RS485/Modbus, LoRa, MQTT, C/C++, Hardware Debugging, and System Integration.</p>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <div class="social-icons">
+            <a href="https://github.com/Dev-pmthang" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.facebook.com/minhthang66" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://zalo.me/0862114971" target="_blank" rel="noopener noreferrer" aria-label="Zalo">
+              <img src="assets/img/Contact/zalo-icon.svg" alt="" class="social-icon-image social-icon-image--zalo"
+                aria-hidden="true">
+            </a>
+            <a href="https://www.linkedin.com/in/devmt0811/" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-linkedin"></i>
+            </a>
+          </div>
+          <div class="btn-group">
+            <a href="assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf" class="btn" target="_blank">
+              CV
+            </a>
+            <a href="#contact" class="btn">Contact</a>
+          </div>
+        </div>
       </div>
-
     </div>
-    <div class="home-img">
-      <img src="assets/img/pic1.png" alt="MINH THANG Portrait">
+    <div class="home-visual">
+      <span class="home-visual-grid" aria-hidden="true"></span>
+      <span class="home-visual-orbit home-visual-orbit--outer" aria-hidden="true"></span>
+      <span class="home-visual-orbit home-visual-orbit--inner" aria-hidden="true"></span>
+      <div class="home-img">
+        <span class="home-img-frame home-img-frame--orange" aria-hidden="true"></span>
+        <span class="home-img-frame home-img-frame--cyan" aria-hidden="true"></span>
+        <span class="home-img-corner home-img-corner--tl" aria-hidden="true"></span>
+        <span class="home-img-corner home-img-corner--tr" aria-hidden="true"></span>
+        <span class="home-img-corner home-img-corner--bl" aria-hidden="true"></span>
+        <span class="home-img-corner home-img-corner--br" aria-hidden="true"></span>
+        <span class="home-img-accent home-img-accent--top" aria-hidden="true"></span>
+        <span class="home-img-accent home-img-accent--bottom" aria-hidden="true"></span>
+        <span class="home-img-tint" aria-hidden="true"></span>
+        <img src="assets/img/pic1-hero-cutout.png?v=20260606-1" alt="MINH THANG Portrait">
+      </div>
     </div>
   </section>
 
@@ -70,12 +131,12 @@
     <div class="about-content">
       <h2>About <span>Me</span></h2>
       <p>
-Passionate about embedded systems, with hands-on experience gained through multiple hardware and
-firmware development projects. Skilled in hardware design, schematic capture, PCB layout, and
-embedded firmware development, with the ability to contribute to end-to-end electronic product
-development. Seeking long-term professional growth in a technical environment where I can solve
-real-world engineering challenges, continuously update emerging technologies, and strengthen my
-expertise toward becoming an Embedded/Hardware System Architect within the next five years
+        Passionate about embedded systems, with hands-on experience gained through multiple hardware and
+        firmware development projects. Skilled in hardware design, schematic capture, PCB layout, and
+        embedded firmware development, with the ability to contribute to end-to-end electronic product
+        development. Seeking long-term professional growth in a technical environment where I can solve
+        real-world engineering challenges, continuously update emerging technologies, and strengthen my
+        expertise toward becoming an Embedded/Hardware System Architect within the next five years
       </p>
       <a href="#" class="btn">Read More</a>
     </div>
@@ -123,8 +184,8 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
           <i class="fa-solid fa-wrench"></i>
           <h4>Testing & Debugging Products</h4>
           <p>
-            I perform comprehensive testing and debugging of embedded systems and IoT products, including hardware 
-            validation, firmware verification, protocol testing, and performance analysis. I use oscilloscopes, 
+            I perform comprehensive testing and debugging of embedded systems and IoT products, including hardware
+            validation, firmware verification, protocol testing, and performance analysis. I use oscilloscopes,
             logic analyzers, and debugging tools to ensure product reliability and quality.
           </p>
         </div>
@@ -134,7 +195,7 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
 
   <section class="technical-stack" id="technical-stack">
     <h2 class="heading">Technical <span>Stack</span></h2>
-    
+
     <div class="tech-grid-container">
       <div class="tech-category">
         <h3><i class="fa-solid fa-microchip"></i> Microcontrollers (MCUs)</h3>
@@ -234,7 +295,7 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
           <div class="project-summary">Industrial Lithium Battery Protection Controller (04/2026 - Present)</div>
           <div class="project-description">
             <p>Designed a custom protection controller PCB for electric forklift lithium battery systems, using the
-              ESP32-S3 as the main MCU. The controller communicates with the BMS over CAN Bus and RS485 to monitor
+              ESP32 as the main MCU. The controller communicates with the BMS over CAN Bus and RS485 to monitor
               voltage, current, SOC, SOH, temperature, and active alarm status in real time.</p>
             <p>When battery conditions fall below configured thresholds, the system drives relays to disable fork
               lifting and lowering while still allowing the vehicle to return to the charging station safely. A local
@@ -304,6 +365,52 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
 
       <div class="project-row">
         <div class="project-media-gallery project-media-gallery--auto"
+          data-project-gallery="CANbus">
+          <div class="auto-project-gallery" data-project-gallery-items>
+            <div class="auto-project-gallery-item">
+              <img src="assets/img/projects/CANbus/Top_ALITUM.png"
+                alt="CAN Bus Gateway Controller top-side PCB Altium render"
+                class="auto-project-gallery-thumb">
+            </div>
+          </div>
+        </div>
+        <div class="project-content">
+          <div class="project-title">CAN Bus Gateway Controller</div>
+          <div class="project-summary">Embedded Hardware & Firmware Engineer — BMS & Charger Protocol Converter</div>
+          <div class="project-description">
+            <p>Designed and developed a complete CAN Bus gateway controller system from hardware to firmware and field
+              deployment. The system converts and synchronizes communication between Battery Management System (BMS) and
+              charger devices using different CAN protocols, enabling seamless interoperability in industrial battery
+              systems.</p>
+            <p>I handled the full engineering cycle: schematic design, PCB layout, embedded firmware development on
+              STM32, CAN frame parsing and filtering, UART debug logging, EEPROM configuration storage, enclosure
+              assembly, wiring, and real-world validation with CAN Analyzer, oscilloscope, and actual BMS/charger
+              hardware.</p>
+          </div>
+          <div class="tech-stack">
+            <span class="tech-label">Technology & Engineering:</span>
+            <div class="tags">
+              <span>STM32</span>
+              <span>Embedded C</span>
+              <span>CAN Bus</span>
+              <span>BMS Protocol</span>
+              <span>Charger Protocol</span>
+              <span>PCB Design</span>
+              <span>Hardware Design</span>
+              <span>Firmware Development</span>
+              <span>UART Debug</span>
+              <span>EEPROM</span>
+              <span>ESD Protection</span>
+              <span>CAN Analyzer</span>
+              <span>Oscilloscope</span>
+              <span>System Integration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-row">
+        <div class="project-media-gallery project-media-gallery--auto"
           data-project-gallery="Smart-Industrial-Valve-Controller">
           <div class="auto-project-gallery auto-project-gallery--single" data-project-gallery-items>
             <div class="auto-project-gallery-item">
@@ -352,10 +459,20 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
       <div class="project-row">
         <div class="project-media-gallery project-media-gallery--auto"
           data-project-gallery="NRF">
-          <div class="auto-project-gallery auto-project-gallery--single" data-project-gallery-items>
+          <div class="auto-project-gallery" data-project-gallery-items>
             <div class="auto-project-gallery-item">
-              <img src="assets/img/projects/NRF/Board.jpg"
+              <img src="assets/img/projects/NRF/Board.jpg?v=20260605-1"
                 alt="Vehicle Navigation Display custom PCB and navigation display hardware"
+                class="auto-project-gallery-thumb">
+            </div>
+            <div class="auto-project-gallery-item">
+              <img src="assets/img/projects/NRF/NRF.png?v=20260605-1"
+                alt="Vehicle Navigation Display top-side PCB render"
+                class="auto-project-gallery-thumb">
+            </div>
+            <div class="auto-project-gallery-item">
+              <img src="assets/img/projects/NRF/NRF_BOT.png?v=20260605-1"
+                alt="Vehicle Navigation Display bottom-side PCB render"
                 class="auto-project-gallery-thumb">
             </div>
           </div>
@@ -474,54 +591,51 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
   <section class="contact" id="contact">
     <h2 class="heading">Contact <span>Me</span></h2>
     <div class="contact-layout">
-      <div class="contact-sidebar">
-        <article class="contact-card contact-card--intro">
-          <div class="contact-card-heading">
-            <span class="contact-badge">
-              <i class="fa-solid fa-microchip"></i>
-              Embedded Collaboration
+      <div class="contact-info-card">
+        <div class="contact-card-heading">
+          <span class="contact-badge">
+            <i class="fa-solid fa-microchip"></i>
+            Embedded Collaboration
+          </span>
+          <h3>Let's Build Something Reliable</h3>
+        </div>
+        <p class="contact-info-role">Embedded Hardware & Firmware Engineer</p>
+        <p class="contact-info-desc">
+          For embedded hardware, firmware bring-up, industrial automation, or product integration &mdash;
+          connect through any channel below.
+        </p>
+        <div class="contact-details">
+          <a href="mailto:mr.thang0811@gmail.com" class="contact-detail">
+            <span class="contact-detail-icon"><i class="fa-solid fa-envelope"></i></span>
+            <span class="contact-detail-text">
+              <span class="contact-detail-label">Email</span>
+              <span class="contact-detail-value">mr.thang0811@gmail.com</span>
             </span>
-            <h3>Let's Build Something Reliable</h3>
-          </div>
-          <p>
-            For embedded hardware, firmware bring-up, industrial automation, or product integration discussions,
-            send a detailed message through the form or connect instantly via Zalo.
-          </p>
-          <div class="contact-highlights">
-            <div class="contact-highlight">
-              <i class="fa-solid fa-diagram-project"></i>
-              <div>
-                <h4>Project Discussions</h4>
-                <p>Share your system goals, technical constraints, and deployment context for a focused conversation.</p>
-              </div>
-            </div>
-            <div class="contact-highlight">
-              <i class="fa-solid fa-comments"></i>
-              <div>
-                <h4>Quick Connection</h4>
-                <p>Use Zalo for a fast introduction, then continue with the form when you need a structured brief.</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="contact-card contact-card--zalo">
-          <div class="contact-card-heading">
-            <span class="contact-badge contact-badge--zalo">
-              <i class="fa-solid fa-qrcode"></i>
-              Zalo
+          </a>
+          <a href="tel:0862114971" class="contact-detail">
+            <span class="contact-detail-icon"><i class="fa-solid fa-phone"></i></span>
+            <span class="contact-detail-text">
+              <span class="contact-detail-label">Phone / Zalo</span>
+              <span class="contact-detail-value">0862 114 971</span>
             </span>
-            <h3>Connect via Zalo</h3>
+          </a>
+          <div class="contact-detail">
+            <span class="contact-detail-icon"><i class="fa-solid fa-location-dot"></i></span>
+            <span class="contact-detail-text">
+              <span class="contact-detail-label">Location</span>
+              <span class="contact-detail-value">Ho Chi Minh City, Vietnam</span>
+            </span>
           </div>
-          <p>Scan the QR code to connect with me on Zalo.</p>
-          <div class="contact-qr-shell">
-            <img src="assets/img/Contact/Zalo.jpg" alt="Zalo QR code to connect with MINH THANG"
-              class="contact-qr-image">
+        </div>
+        <div class="contact-qr">
+          <div class="contact-qr-frame">
+            <img src="assets/img/Contact/Zalo.jpg" alt="Zalo QR code to connect with MINH THANG" class="contact-qr-image">
           </div>
-        </article>
+          <span class="contact-qr-caption">Scan to connect on Zalo</span>
+        </div>
       </div>
 
-      <div class="contact-form-shell">
+      <div class="contact-form-card">
         <div class="contact-card-heading">
           <span class="contact-badge">
             <i class="fa-solid fa-paper-plane"></i>
@@ -529,27 +643,33 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
           </span>
           <h3>Send a Message</h3>
         </div>
-        <p class="contact-form-copy">
+        <p class="contact-form-desc">
           Share your project scope, hardware requirements, or deployment goals. I will review your message and reply
           through the contact details you provide.
         </p>
         <form id="contact-form">
-          <div class="input-group">
-            <div class="input-box">
+          <div class="form-row">
+            <div class="form-field">
               <input type="text" name="name" placeholder="Full Name" required>
+            </div>
+            <div class="form-field">
+              <input type="number" name="phone" id="phone" placeholder="Phone Number" class="input-phone">
+              <small class="error-message" id="phone-error"></small>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
               <input type="email" name="email" id="email" placeholder="Email">
               <small class="error-message" id="email-error"></small>
             </div>
-            <div class="input-box">
-              <input type="number" name="phone" id="phone" placeholder="Phone Number" class="input-phone">
-              <small class="error-message" id="phone-error"></small>
+            <div class="form-field">
               <input type="text" name="subject" placeholder="Subject">
             </div>
           </div>
-          <div class="input-group-2">
-            <textarea name="message" placeholder="Your Message" cols="30" rows="10" required></textarea>
-            <input type="submit" value="Send Message" class="btn">
+          <div class="form-field">
+            <textarea name="message" placeholder="Your Message" required></textarea>
           </div>
+          <input type="submit" value="Send Message" class="btn">
         </form>
       </div>
     </div>
@@ -563,6 +683,10 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
       <a href="https://www.facebook.com/minhthang66" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-facebook"></i>
       </a>
+      <a href="https://zalo.me/0862114971" target="_blank" rel="noopener noreferrer" aria-label="Zalo">
+        <img src="assets/img/Contact/zalo-icon.svg" alt="" class="social-icon-image social-icon-image--zalo"
+          aria-hidden="true">
+      </a>
       <a href="https://www.linkedin.com/in/devmt0811/" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-linkedin"></i>
       </a>
@@ -574,11 +698,11 @@ expertise toward becoming an Embedded/Hardware System Architect within the next 
       <li><a href="#technical-stack">Technical Stack</a></li>
       <li><a href="#projects">Projects</a></li>
     </ul>
-    <p class="copyright"> © MINH THANG | All Rights Reserved</p>
+    <p class="copyright">&copy; MINH THANG | All Rights Reserved</p>
   </footer>
 
-  <script src="assets/data/project-galleries.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script src="assets/data/project-galleries.js?v=20260605-2"></script>
+  <script src="assets/js/script.js?v=20260605-2"></script>
 </body>
 
 </html>
