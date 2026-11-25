@@ -1,0 +1,377 @@
+{
+  "meta": {
+    "title": "MINH THANG Portfolio",
+    "favicon": "favicon.ico"
+  },
+  "header": {
+    "logo": {
+      "prefix": "Mr.",
+      "name": "MINH THANG"
+    },
+    "nav": [
+      { "label": "Home", "href": "#home" },
+      { "label": "About", "href": "#about" },
+      { "label": "Services", "href": "#services" },
+      { "label": "Technical Stack", "href": "#technical-stack" },
+      { "label": "Projects", "href": "#projects" },
+      { "label": "Contact", "href": "#contact" }
+    ],
+    "contactButtonText": "Contact Me"
+  },
+  "hero": {
+    "badge": {
+      "icon": "fa-solid fa-microchip",
+      "text": "Embedded Systems Engineer"
+    },
+    "greeting": "Hi, It's",
+    "name": "MINH THANG",
+    "rolePrefix": "I'm an",
+    "roleHighlight": "EMBEDDED\u00a0SYSTEMS",
+    "roleSuffix": "ENGINEER",
+    "facts": [
+      {
+        "icon": "fa-solid fa-user-gear",
+        "text": "About Me"
+      },
+      {
+        "icon": "fa-solid fa-graduation-cap",
+        "label": "Background:",
+        "text": "Computer Engineering"
+      },
+      {
+        "icon": "fa-solid fa-microchip",
+        "text": "Currently designing and developing embedded systems from schematic, PCB layout to firmware implementation and real-world deployment."
+      },
+      {
+        "icon": "fa-solid fa-satellite-dish",
+        "label": "Interests:",
+        "text": "Embedded Systems, IoT, Industrial Automation, Real-Time Communication, and Hardware Optimization."
+      },
+      {
+        "icon": "fa-solid fa-bullseye",
+        "label": "Goal:",
+        "text": "Become an Embedded/Hardware Architect and build reliable, scalable, and high-performance electronic products."
+      },
+      {
+        "icon": "fa-solid fa-bolt",
+        "label": "Expertise:",
+        "text": "STM32, ESP32, FreeRTOS, PCB Design, CAN Bus, RS485/Modbus, LoRa, MQTT, C/C++, Hardware Debugging, and System Integration."
+      }
+    ],
+    "socialLinks": [
+      { "url": "https://github.com/Dev-pmthang", "icon": "fa-brands fa-github", "type": "icon" },
+      { "url": "https://www.facebook.com/minhthang66", "icon": "fa-brands fa-facebook", "type": "icon" },
+      { "url": "https://zalo.me/0862114971", "icon": "assets/img/Contact/zalo-icon.svg", "type": "image", "label": "Zalo", "imageClass": "social-icon-image social-icon-image--zalo" },
+      { "url": "https://www.linkedin.com/in/devmt0811/", "icon": "fa-brands fa-linkedin", "type": "icon" }
+    ],
+    "buttons": [
+      { "label": "CV", "href": "assets/docs/PHAM_MINH_THANG_EMBEDDED SYSTEMS ENGINEER_2026.pdf", "target": "_blank" },
+      { "label": "Contact", "href": "#contact" }
+    ],
+    "image": {
+      "src": "assets/img/pic1-hero-cutout.png?v=20260606-1",
+      "alt": "MINH THANG Portrait"
+    }
+  },
+  "about": {
+    "image": {
+      "src": "assets/img/pic2.png",
+      "alt": "MINH THANG Portrait Left"
+    },
+    "title": {
+      "text": "About",
+      "highlight": "Me"
+    },
+    "description": "Passionate about embedded systems, with hands-on experience gained through multiple hardware and firmware development projects. Skilled in hardware design, schematic capture, PCB layout, and embedded firmware development, with the ability to contribute to end-to-end electronic product development. Seeking long-term professional growth in a technical environment where I can solve real-world engineering challenges, continuously update emerging technologies, and strengthen my expertise toward becoming an Embedded/Hardware System Architect within the next five years",
+    "buttonText": "Read More",
+    "buttonHref": "#"
+  },
+  "services": {
+    "heading": "Services",
+    "items": [
+      {
+        "icon": "fa-solid fa-code",
+        "title": "Embedded & IoT Development",
+        "description": "I develop embedded and IoT systems on microcontroller platforms, performing specific tasks such as data acquisition, sensor interfacing, and communication with cloud services using protocols like MQTT and HTTP."
+      },
+      {
+        "icon": "fa-solid fa-microchip",
+        "title": "Hardware PCB Design",
+        "description": "I design PCBs to perform the specific tasks my embedded system performs. This includes selecting components, creating schematics, and laying out the PCB to ensure proper functionality and reliability."
+      },
+      {
+        "icon": "fa-solid fa-laptop-code",
+        "title": "Application Development",
+        "description": "I write applications on both windows and mobile platforms to deploy to embedded and IoT systems that I design, and also write tools to do some automated work."
+      },
+      {
+        "icon": "fa-solid fa-wrench",
+        "title": "Testing & Debugging Products",
+        "description": "I perform comprehensive testing and debugging of embedded systems and IoT products, including hardware validation, firmware verification, protocol testing, and performance analysis. I use oscilloscopes, logic analyzers, and debugging tools to ensure product reliability and quality."
+      }
+    ]
+  },
+  "technicalStack": {
+    "heading": {
+      "text": "Technical",
+      "highlight": "Stack"
+    },
+    "categories": [
+      {
+        "icon": "fa-solid fa-microchip",
+        "title": "Microcontrollers (MCUs)",
+        "items": ["ESP32", "ESP8266", "MSP430G2553", "STM32 Series", "Nordic nRF52840", "Arduino-based"]
+      },
+      {
+        "icon": "fa-solid fa-wifi",
+        "title": "Protocols & Communication",
+        "items": ["MQTT", "CAN Bus", "RS485/ModBus RTU", "HTTP/HTTPS", "BLE/Bluetooth", "LoRa", "SPI/I2C/UART", "OneWire"]
+      },
+      {
+        "icon": "fa-solid fa-tools",
+        "title": "Development Tools & Software",
+        "items": ["Altium Designer", "KiCAD", "Proteus", "LTspice", "VS Code", "PlatformIO", "Arduino IDE", "MATLAB/Simulink", "Git & GitHub"]
+      },
+      {
+        "icon": "fa-solid fa-code",
+        "title": "Programming Languages",
+        "items": ["C/C++", "Python", "TypeScript", "Assembly"]
+      },
+      {
+        "icon": "fa-solid fa-cube",
+        "title": "Hardware & PCB Design",
+        "items": ["PCB Layout & Design", "EMI/EMC", "Schematic Design", "Component Selection", "PI/SI Integrity", "Power Distribution", "FPGA Basics"]
+      },
+      {
+        "icon": "fa-solid fa-cloud",
+        "title": "IoT & Cloud Platforms",
+        "items": ["ESP32 Web Server", "OTA Firmware Updates", "Firebase", "Blynk IoT", "ThingSpeak", "Real-time Data Processing"]
+      }
+    ]
+  },
+  "projects": {
+    "heading": "Projects",
+    "items": [
+      {
+        "galleryKey": "Forklift-Battery-Protection-Controller",
+        "galleryType": "auto",
+        "galleryMode": "single",
+        "fallbackImages": [
+          {
+            "src": "assets/img/projects/Forklift-Battery-Protection-Controller/BMS_RELAY.png",
+            "alt": "Forklift Battery Protection Controller protection board render"
+          }
+        ],
+        "title": "Forklift Battery Protection Controller",
+        "summary": "Industrial Lithium Battery Protection Controller (04/2026 - Present)",
+        "description": [
+          "Designed a custom protection controller PCB for electric forklift lithium battery systems, using the ESP32 as the main MCU. The controller communicates with the BMS over CAN Bus and RS485 to monitor voltage, current, SOC, SOH, temperature, and active alarm status in real time.",
+          "When battery conditions fall below configured thresholds, the system drives relays to disable fork lifting and lowering while still allowing the vehicle to return to the charging station safely. A local SPI display, EEPROM-based history logging, and a web configuration interface support threshold tuning, fault tracing, and reliable operation in EMI/EMC-sensitive industrial environments."
+        ],
+        "techStack": [
+          "ESP32-S3", "CAN Bus", "RS485", "SPI Display", "EEPROM",
+          "Relay Control", "Web Server", "Altium Designer", "EMI/EMC PCB Design", "Embedded Firmware"
+        ]
+      },
+      {
+        "galleryKey": "BMS",
+        "galleryType": "auto",
+        "galleryMode": "single",
+        "fallbackImages": [
+          {
+            "src": "assets/img/projects/BMS/BMS.png",
+            "alt": "Lithium Battery Management System BMS control board render"
+          }
+        ],
+        "title": "Lithium Battery Management System - BMS",
+        "summary": "Lithium Battery Protection and Monitoring System (12/2025 - Present)",
+        "description": [
+          "Designed schematics and 2-layer PCB layouts for lithium battery management systems, covering high-current power paths, ADC measurement circuits, protection stages, noise suppression, and ESD protection for reliable battery protection and status monitoring.",
+          "Developed the embedded firmware independently on STM32 using HAL and FreeRTOS, implementing ADC data acquisition, digital signal filtering, protection logic, and peripheral control. Integrated CAN Bus, RS485, I2C, UART, and SPI to support lithium battery protection and real-time monitoring applications."
+        ],
+        "techStack": [
+          "STM32 HAL", "FreeRTOS", "2-Layer PCB Layout", "High-Current Circuit Design",
+          "ADC Measurement", "Protection Circuit", "Noise Suppression", "ESD Protection",
+          "CAN Bus", "RS485", "I2C", "UART", "SPI", "Lithium Battery Monitoring"
+        ]
+      },
+      {
+        "galleryKey": "CANbus",
+        "galleryType": "auto",
+        "galleryMode": "multi",
+        "fallbackImages": [
+          {
+            "src": "assets/img/projects/CANbus/Top_ALITUM.png",
+            "alt": "CAN Bus Gateway Controller top-side PCB Altium render"
+          }
+        ],
+        "title": "CAN Bus Gateway Controller",
+        "summary": "Embedded Hardware & Firmware Engineer — BMS & Charger Protocol Converter",
+        "description": [
+          "Designed and developed a complete CAN Bus gateway controller system from hardware to firmware and field deployment. The system converts and synchronizes communication between Battery Management System (BMS) and charger devices using different CAN protocols, enabling seamless interoperability in industrial battery systems.",
+          "I handled the full engineering cycle: schematic design, PCB layout, embedded firmware development on STM32, CAN frame parsing and filtering, UART debug logging, EEPROM configuration storage, enclosure assembly, wiring, and real-world validation with CAN Analyzer, oscilloscope, and actual BMS/charger hardware."
+        ],
+        "techStack": [
+          "STM32", "Embedded C", "CAN Bus", "BMS Protocol", "Charger Protocol",
+          "PCB Design", "Hardware Design", "Firmware Development", "UART Debug",
+          "EEPROM", "ESD Protection", "CAN Analyzer", "Oscilloscope", "System Integration"
+        ]
+      },
+      {
+        "galleryKey": "Smart-Industrial-Valve-Controller",
+        "galleryType": "auto",
+        "galleryMode": "single",
+        "fallbackImages": [
+          {
+            "src": "assets/img/projects/Smart-Industrial-Valve-Controller/HP_Valves_Slave.png",
+            "alt": "Smart Industrial Valve Controller 4-layer PCB render"
+          }
+        ],
+        "title": "Smart Industrial Valve Controller",
+        "summary": "Industrial Valve Actuation Controller (03/2025 - Present)",
+        "description": [
+          "Designed schematics and 4-layer PCB layouts for an industrial valve controller with AGND/DGND separation, EMI/EMC-conscious routing, ESD protection, and robust 4-20 mA / 0-10 V interfaces for noise-tolerant operation in factory environments. I also designed the H-Bridge motor driver stage for precise stepper motor actuation, covering direction control, current handling, and protection circuitry for reliable field operation.",
+          "Developed the embedded firmware on STM32 using HAL and FreeRTOS, implementing PID control, encoder feedback, Kalman filtering, ADC processing, EEPROM wear-leveling, self-diagnostics, and industrial communications over RS485 Modbus RTU, SPI, I2C, and UART with CRC checking. I supported end-to-end testing and deployment at TS FOOD factory, including HMI/PLC configuration, valve calibration, motor tuning, and operational acceptance testing, while continuing to develop V2 with enhanced monitoring and control capabilities."
+        ],
+        "techStack": [
+          "STM32", "FreeRTOS", "PID Control", "Encoder Feedback", "H-Bridge Motor Driver",
+          "Stepper Motor Control", "RS485 Modbus RTU", "4-20mA", "0-10V", "EEPROM",
+          "Kalman Filter", "Altium Designer", "EMI/EMC PCB Design"
+        ]
+      },
+      {
+        "galleryKey": "NRF",
+        "galleryType": "auto",
+        "galleryMode": "multi",
+        "fallbackImages": [
+          {
+            "src": "assets/img/projects/NRF/Board.jpg?v=20260605-1",
+            "alt": "Vehicle Navigation Display custom PCB and navigation display hardware"
+          },
+          {
+            "src": "assets/img/projects/NRF/NRF.png?v=20260605-1",
+            "alt": "Vehicle Navigation Display top-side PCB render"
+          },
+          {
+            "src": "assets/img/projects/NRF/NRF_BOT.png?v=20260605-1",
+            "alt": "Vehicle Navigation Display bottom-side PCB render"
+          }
+        ],
+        "title": "Vehicle Navigation Display",
+        "summary": "Low-Power Vehicle Navigation Display with QSPI High-Brightness Screen",
+        "description": [
+          "This project is a compact navigation display system designed for vehicle applications. I designed a custom 4-layer PCB based on EMI/EMC design practices, focusing on signal integrity, stable power distribution, noise reduction, and reliable operation in mobile environments.",
+          "The system uses an nRF52840 microcontroller and a high-resolution QSPI display with high brightness for clear visibility. The design focuses on low-power operation, battery optimization, fast display refresh, and expandability for additional features such as wireless connectivity, sensor integration, interface customization, and real-time navigation information display."
+        ],
+        "techStack": [
+          "nRF52840", "QSPI Display", "4-Layer PCB", "EMI/EMC", "Low Power Design",
+          "Battery Optimization", "Embedded Firmware", "Altium Designer", "UI Display",
+          "Wireless Connectivity"
+        ]
+      },
+      {
+        "galleryKey": "Graduation-thesis",
+        "galleryType": "thesis",
+        "galleryImages": [
+          {
+            "src": "assets/img/projects/Graduation-thesis/Master.jpg",
+            "alt": "LoRa Mesh environmental monitoring master node with mobile dashboard",
+            "layout": "hero"
+          },
+          {
+            "src": "assets/img/projects/Graduation-thesis/Node.jpg",
+            "alt": "LoRa Mesh environmental monitoring field node hardware",
+            "layout": "portrait"
+          },
+          {
+            "src": "assets/img/projects/Graduation-thesis/Bo_tri.jpg",
+            "alt": "LoRa Mesh environmental monitoring deployment layout",
+            "layout": "portrait"
+          },
+          {
+            "src": "assets/img/projects/Graduation-thesis/Full_Board.jpg",
+            "alt": "LoRa Mesh monitoring board assembly close-up",
+            "layout": "wide"
+          },
+          {
+            "src": "assets/img/projects/Graduation-thesis/Board_Altium.JPG",
+            "alt": "LoRa Mesh environmental monitoring board render in Altium",
+            "layout": "wide"
+          }
+        ],
+        "title": "Application of LoRa Mesh Network in Environmental Monitoring",
+        "summary": "Graduation Thesis | Embedded Hardware & Firmware Engineer (01/2024 - 05/2024)",
+        "description": [
+          "Designed the schematics and PCB layout for an ESP32-based central control board, integrating power supply stages, sensor modules, and low-power communication hardware for a distributed environmental monitoring system.",
+          "Developed firmware to acquire multi-sensor data over ADC, UART, I2C, and SPI, implemented and optimized a LoRa Mesh routing algorithm for stable long-range communication, and synchronized real-time data to Firebase with a mobile application for visualization and threshold-based alerts. The thesis achieved a final score of 9.17/10 (Grade A)."
+        ],
+        "techStack": [
+          "ESP32", "LoRa Mesh", "Environmental Monitoring", "Embedded Firmware",
+          "PCB Design", "ADC/UART/I2C/SPI", "Firebase", "Mobile App"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "heading": {
+      "text": "Contact",
+      "highlight": "Me"
+    },
+    "infoCard": {
+      "badge": {
+        "icon": "fa-solid fa-microchip",
+        "text": "Embedded Collaboration"
+      },
+      "title": "Let's Build Something Reliable",
+      "role": "Embedded Hardware & Firmware Engineer",
+      "description": "For embedded hardware, firmware bring-up, industrial automation, or product integration — connect through any channel below.",
+      "details": [
+        {
+          "icon": "fa-solid fa-envelope",
+          "label": "Email",
+          "value": "mr.thang0811@gmail.com",
+          "href": "mailto:mr.thang0811@gmail.com",
+          "type": "link"
+        },
+        {
+          "icon": "fa-solid fa-phone",
+          "label": "Phone / Zalo",
+          "value": "0862 114 971",
+          "href": "tel:0862114971",
+          "type": "link"
+        },
+        {
+          "icon": "fa-solid fa-location-dot",
+          "label": "Location",
+          "value": "Ho Chi Minh City, Vietnam",
+          "type": "text"
+        }
+      ]
+    },
+    "formCard": {
+      "badge": {
+        "icon": "fa-solid fa-paper-plane",
+        "text": "Direct Message"
+      },
+      "title": "Send a Message",
+      "description": "Share your project scope, hardware requirements, or deployment goals. I will review your message and reply through the contact details you provide.",
+      "formspreeUrl": "https://formspree.io/f/mojzqaeq"
+    }
+  },
+  "footer": {
+    "socialLinks": [
+      { "url": "https://github.com/Dev-pmthang", "icon": "fa-brands fa-github", "type": "icon" },
+      { "url": "https://www.facebook.com/minhthang66", "icon": "fa-brands fa-facebook", "type": "icon" },
+      { "url": "https://zalo.me/0862114971", "icon": "assets/img/Contact/zalo-icon.svg", "type": "image", "label": "Zalo", "imageClass": "social-icon-image social-icon-image--zalo" },
+      { "url": "https://www.linkedin.com/in/devmt0811/", "icon": "fa-brands fa-linkedin", "type": "icon" }
+    ],
+    "links": [
+      { "label": "FAQ", "href": "" },
+      { "label": "Services", "href": "#services" },
+      { "label": "About", "href": "#about" },
+      { "label": "Technical Stack", "href": "#technical-stack" },
+      { "label": "Projects", "href": "#projects" }
+    ],
+    "copyright": "© MINH THANG | All Rights Reserved"
+  }
+}
