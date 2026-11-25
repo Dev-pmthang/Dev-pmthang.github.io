@@ -8,12 +8,8 @@ $normalizedCss = ($cssContent -replace "\s+", " ").Trim()
 $requiredHtmlSnippets = @(
   '<section class="contact" id="contact">',
   '<div class="contact-layout">',
-  'class="contact-card contact-card--intro"',
-  'class="contact-card contact-card--zalo"',
-  'Connect via Zalo',
-  'Scan the QR code to connect with me on Zalo.',
-  'assets/img/Contact/Zalo.jpg',
-  'class="contact-form-shell"',
+  'class="contact-info-card"',
+  'class="contact-form-card"',
   'id="contact-form"',
   'Send a Message'
 )
@@ -28,16 +24,9 @@ foreach ($snippet in $requiredHtmlSnippets) {
 
 $requiredCssSnippets = @(
   '.contact-layout',
-  '.contact-sidebar',
-  '.contact-card',
-  '.contact-card--zalo:hover .contact-qr-image',
-  '.contact-qr-shell',
-  '.contact-qr-image',
-  '.contact #contact-form .input-group',
-  '.contact-badge--zalo',
-  'object-fit: contain',
-  'overflow: hidden',
-  'grid-template-columns: minmax(300px, 0.84fr) minmax(0, 1.16fr)'
+  '.contact-info-card',
+  '.contact #contact-form',
+  'grid-template-columns: minmax(340px, 0.94fr) minmax(0, 1.06fr)'
 )
 
 foreach ($snippet in $requiredCssSnippets) {
@@ -47,7 +36,6 @@ foreach ($snippet in $requiredCssSnippets) {
 }
 
 $requiredFiles = @(
-  "assets/img/Contact/Zalo.jpg",
   "tests/verify-contact-layout.mjs"
 )
 
@@ -55,11 +43,6 @@ foreach ($file in $requiredFiles) {
   if (-not (Test-Path $file)) {
     throw "Missing expected contact asset or test file: $file"
   }
-}
-
-$contactCardCount = ([regex]::Matches($htmlContent, 'class="contact-card contact-card--')).Count
-if ($contactCardCount -ne 2) {
-  throw "Expected 2 primary contact cards but found $contactCardCount"
 }
 
 $contactFormCount = ([regex]::Matches($htmlContent, 'id="contact-form"')).Count

@@ -21,7 +21,6 @@ const viewportCases = [
     expectedFormColumns: 2,
     expectedSidebarRatioMin: 0.38,
     expectedSidebarRatioMax: 0.46,
-    expectedQrShareMax: 0.66,
     expectedHeightRatioMin: 0.9,
     expectedHeightRatioMax: 1.1
   },
@@ -31,8 +30,7 @@ const viewportCases = [
     height: 1180,
     mobile: false,
     expectedStacked: true,
-    expectedFormColumns: 2,
-    expectedQrShareMax: 0.72
+    expectedFormColumns: 2
   },
   {
     name: "mobile",
@@ -40,8 +38,7 @@ const viewportCases = [
     height: 980,
     mobile: true,
     expectedStacked: true,
-    expectedFormColumns: 1,
-    expectedQrShareMax: 0.78
+    expectedFormColumns: 1
   }
 ];
 
@@ -352,15 +349,10 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
   await waitForExpression(
     cdp,
     `(() => {
-      const qrImage = document.querySelector(".contact-qr-image");
       return Boolean(document.querySelector(".contact-layout"))
-        && Boolean(document.querySelector(".contact-form-shell"))
-        && Boolean(document.querySelector(".contact-card--zalo"))
-        && Boolean(document.getElementById("contact-form"))
-        && qrImage
-        && qrImage.complete
-        && qrImage.naturalWidth > 0
-        && qrImage.naturalHeight > 0;
+        && Boolean(document.querySelector(".contact-info-card"))
+        && Boolean(document.querySelector(".contact-form-card"))
+        && Boolean(document.getElementById("contact-form"));
     })()`
   );
 
@@ -369,67 +361,43 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
     `(() => {
       const section = document.querySelector("#contact");
       const layout = document.querySelector(".contact-layout");
-      const sidebar = document.querySelector(".contact-sidebar");
-      const formShell = document.querySelector(".contact-form-shell");
-      const qrCard = document.querySelector(".contact-card--zalo");
-      const qrShell = document.querySelector(".contact-qr-shell");
-      const qrImage = document.querySelector(".contact-qr-image");
+      const infoCard = document.querySelector(".contact-info-card");
+      const formCard = document.querySelector(".contact-form-card");
       const form = document.getElementById("contact-form");
-      const inputGroup = form?.querySelector(".input-group");
+      const inputGroup = form?.querySelector(".form-row");
       const submitButton = form?.querySelector(".btn");
 
       const layoutRect = layout?.getBoundingClientRect();
-      const sidebarRect = sidebar?.getBoundingClientRect();
-      const formRect = formShell?.getBoundingClientRect();
-      const qrCardRect = qrCard?.getBoundingClientRect();
-      const qrShellRect = qrShell?.getBoundingClientRect();
-      const qrImageRect = qrImage?.getBoundingClientRect();
+      const infoCardRect = infoCard?.getBoundingClientRect();
+      const formRect = formCard?.getBoundingClientRect();
 
-      const sameTopRow = sidebarRect && formRect ? Math.abs(sidebarRect.top - formRect.top) <= 12 : false;
-      const alignedColumn = sidebarRect && formRect ? Math.abs(sidebarRect.left - formRect.left) <= 12 : false;
+      const sameTopRow = infoCardRect && formRect ? Math.abs(infoCardRect.top - formRect.top) <= 12 : false;
+      const alignedColumn = infoCardRect && formRect ? Math.abs(infoCardRect.left - formRect.left) <= 12 : false;
 
       return {
         sectionExists: Boolean(section),
         layoutExists: Boolean(layout),
-        sidebarExists: Boolean(sidebar),
-        qrCardExists: Boolean(qrCard),
-        formShellExists: Boolean(formShell),
+        infoCardExists: Boolean(infoCard),
+        formCardExists: Boolean(formCard),
         formExists: Boolean(form),
-        qrSrc: qrImage?.getAttribute("src") || "",
-        qrLoaded: Boolean(qrImage?.complete && qrImage?.naturalWidth > 0 && qrImage?.naturalHeight > 0),
-        qrNaturalWidth: qrImage?.naturalWidth || 0,
-        qrNaturalHeight: qrImage?.naturalHeight || 0,
-        qrWidth: qrImage?.clientWidth || 0,
-        qrHeight: qrImage?.clientHeight || 0,
-        qrShareOfCard: qrCardRect && qrImageRect ? qrImageRect.width / qrCardRect.width : 0,
-        qrObjectFit: qrImage ? getComputedStyle(qrImage).objectFit : "",
-        qrTransition: qrImage ? getComputedStyle(qrImage).transitionProperty : "",
-        qrShellOverflow: qrShell ? getComputedStyle(qrShell).overflow : "",
-        cardTransition: qrCard ? getComputedStyle(qrCard).transitionProperty : "",
         gridColumns: layout
           ? getComputedStyle(layout).gridTemplateColumns.split(" ").filter(Boolean).length
           : 0,
         formColumns: inputGroup
           ? getComputedStyle(inputGroup).gridTemplateColumns.split(" ").filter(Boolean).length
           : 0,
-        sidebarWidthRatio: layoutRect && sidebarRect ? sidebarRect.width / layoutRect.width : 0,
-        formHeightRatio: sidebarRect && formRect ? formRect.height / sidebarRect.height : 0,
+        infoCardWidthRatio: layoutRect && infoCardRect ? infoCardRect.width / layoutRect.width : 0,
+        formHeightRatio: infoCardRect && formRect ? formRect.height / infoCardRect.height : 0,
         layoutNoOverflow: layout ? layout.scrollWidth <= layout.clientWidth + 2 : false,
         sectionNoOverflow: section ? section.scrollWidth <= section.clientWidth + 2 : false,
-        sidebarLeft: sidebarRect?.left || 0,
-        sidebarTop: sidebarRect?.top || 0,
-        sidebarBottom: sidebarRect?.bottom || 0,
+        infoCardLeft: infoCardRect?.left || 0,
+        infoCardTop: infoCardRect?.top || 0,
+        infoCardBottom: infoCardRect?.bottom || 0,
         formLeft: formRect?.left || 0,
         formTop: formRect?.top || 0,
         formBottom: formRect?.bottom || 0,
-        twoColumns: Boolean(sidebarRect && formRect && formRect.left > sidebarRect.left + 40 && sameTopRow),
-        stacked: Boolean(sidebarRect && formRect && alignedColumn && formRect.top >= sidebarRect.bottom - 4),
-        qrInsideShell: Boolean(
-          qrShellRect
-          && qrImageRect
-          && qrImageRect.left >= qrShellRect.left - 1
-          && qrImageRect.right <= qrShellRect.right + 1
-        ),
+        twoColumns: Boolean(infoCardRect && formRect && formRect.left > infoCardRect.left + 40 && sameTopRow),
+        stacked: Boolean(infoCardRect && formRect && alignedColumn && formRect.top >= infoCardRect.bottom - 4),
         submitVisible: Boolean(submitButton && submitButton.getBoundingClientRect().width > 0)
       };
     })()`
@@ -437,35 +405,24 @@ async function verifyViewport(cdp, baseUrl, viewport, screenshotDir) {
 
   assert(state.sectionExists, `${viewport.name}: contact section exists.`);
   assert(state.layoutExists, `${viewport.name}: contact layout exists.`);
-  assert(state.sidebarExists, `${viewport.name}: contact sidebar exists.`);
-  assert(state.qrCardExists, `${viewport.name}: Zalo card exists.`);
-  assert(state.formShellExists, `${viewport.name}: contact form shell exists.`);
+  assert(state.infoCardExists, `${viewport.name}: contact info card exists.`);
+  assert(state.formCardExists, `${viewport.name}: contact form card exists.`);
   assert(state.formExists, `${viewport.name}: contact form exists.`);
-  assert(state.qrLoaded, `${viewport.name}: Zalo QR image loads successfully.`);
-  assert(state.qrSrc.includes("assets/img/Contact/Zalo.jpg"), `${viewport.name}: contact section uses the Zalo QR asset.`);
-  assert(state.qrNaturalWidth > 0 && state.qrNaturalHeight > 0, `${viewport.name}: Zalo QR image has intrinsic dimensions.`);
-  assert(state.qrWidth > 0 && state.qrHeight > 0, `${viewport.name}: Zalo QR image renders visibly.`);
-  assert(state.qrObjectFit === "contain", `${viewport.name}: Zalo QR image keeps object-fit contain.`);
-  assert(state.qrTransition.includes("transform"), `${viewport.name}: Zalo QR image keeps smooth transform transition.`);
-  assert(state.cardTransition.includes("transform"), `${viewport.name}: contact card keeps transform transition.`);
-  assert(state.qrShellOverflow === "hidden", `${viewport.name}: Zalo QR shell clips hover scaling.`);
-  assert(state.qrInsideShell, `${viewport.name}: Zalo QR image stays inside its shell.`);
   assert(state.layoutNoOverflow, `${viewport.name}: contact layout has no internal horizontal overflow.`);
   assert(state.sectionNoOverflow, `${viewport.name}: contact section has no internal horizontal overflow.`);
   assert(state.submitVisible, `${viewport.name}: submit button remains visible.`);
   assert(state.formColumns === viewport.expectedFormColumns, `${viewport.name}: form input group uses ${viewport.expectedFormColumns} column(s).`);
-  assert(state.qrShareOfCard <= viewport.expectedQrShareMax, `${viewport.name}: Zalo QR stays visually compact inside its card.`);
 
   if (viewport.expectedStacked) {
     assert(state.gridColumns === 1, `${viewport.name}: contact layout collapses to 1 column.`);
-    assert(state.stacked, `${viewport.name}: contact sidebar stacks above the form.`);
+    assert(state.stacked, `${viewport.name}: contact info card stacks above the form.`);
   } else {
     assert(state.gridColumns === 2, `${viewport.name}: contact layout keeps 2 columns.`);
-    assert(state.twoColumns, `${viewport.name}: contact sidebar stays beside the form.`);
-    assert(state.sidebarWidthRatio >= viewport.expectedSidebarRatioMin, `${viewport.name}: sidebar keeps the intended minimum width ratio.`);
-    assert(state.sidebarWidthRatio <= viewport.expectedSidebarRatioMax, `${viewport.name}: sidebar keeps the intended maximum width ratio.`);
-    assert(state.formHeightRatio >= viewport.expectedHeightRatioMin, `${viewport.name}: form shell height stays visually balanced with the sidebar.`);
-    assert(state.formHeightRatio <= viewport.expectedHeightRatioMax, `${viewport.name}: form shell height stays visually balanced with the sidebar.`);
+    assert(state.twoColumns, `${viewport.name}: contact info card stays beside the form.`);
+    assert(state.infoCardWidthRatio >= viewport.expectedSidebarRatioMin, `${viewport.name}: info card keeps the intended minimum width ratio.`);
+    assert(state.infoCardWidthRatio <= viewport.expectedSidebarRatioMax, `${viewport.name}: info card keeps the intended maximum width ratio.`);
+    assert(state.formHeightRatio >= viewport.expectedHeightRatioMin, `${viewport.name}: form card height stays visually balanced with the info card.`);
+    assert(state.formHeightRatio <= viewport.expectedHeightRatioMax, `${viewport.name}: form card height stays visually balanced with the info card.`);
   }
 
   const screenshotPath = path.join(screenshotDir, `contact-layout-${viewport.name}.png`);

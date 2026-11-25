@@ -1,0 +1,8 @@
+{
+  "name": "devmt-portfolio",
+  "private": true,
+  "scripts": {
+    "galleries": "node scripts/generate-project-galleries.js",
+    "add-project-image": "node scripts/add-project-image.js"
+  }
+}
